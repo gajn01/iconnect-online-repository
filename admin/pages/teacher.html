@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Admin</title>
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar" >
+            <div class="sidebar-nav">
+                <img src="../assets/logo.png"  width="200px" alt="">
+                <div class="sidebar-content">
+                    <a href="../pages/dashboard.html"  >Dashboard</a>
+                    <a href="../pages/request.html"  >Request</a>
+                    <a href="../pages/school.html">School</a>
+                    <a href="" class="active">Teacher</a>
+                    <a href="../pages/subject.html" >Subject</a>
+                </div>
+                <a class="btn btn-primary btn-logout" href="../index.php">Logout</a>
+            </div>
+        </nav>
+        <div class="content">
+          <!-- Mobile view button -->
+          <div class="top-header-mobile text-end d-lg-none ">
+            <div class="btn btn-bar"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+              <img  class="bars-icon" src="../assets/bars.svg" width="20px" alt="">
+            </div>
+            <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
+              <div class="offcanvas-header justify-content-end ">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body text-center">
+                <div class="text-center">
+                    <img class="mt-3" src="../assets/logo.png"  width="100px" alt="">
+                  <div class="topbar-content">
+                    <a href="../pages/dashboard.html"  >Dashboard</a>
+                    <a href="../pages/request.html"  >Request</a>
+                    <a href="../pages/school.html">School</a>
+                    <a href="" class="active">Teacher</a>
+                    <a href="../pages/subject.html" >Subject</a>
+                </div>
+                <a class="btn btn-primary btn-logout-mobile text-center" href="../index.php">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Mobile view button -->
+          <div class="container-fluid">
+              <h1>Teacher</h1>
+              <!-- Table -->
+              <section>
+                <div class="header-button mt-5">
+                  <input class="searchbar" type="text" name="searchbar" id="searchbar" placeholder="Search here...">
+                  <!-- <button type="button" class="btn btn-primary btn-add">Filter</button> -->
+                  </div>
+              </section>
+            <!-- Table data -->
+            <section >
+                <div class="row">
+                  <div class="col-12">
+                    <div class="table-content table-responsive-md mt-5">
+                      <table class="table">
+                        <thead>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>School</th>
+                            <th>Rank</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody class="table-group-divider">
+                          <tr>
+                            <td>1</td>
+                            <td >ACSD12345</td>
+                            <td>Juan Arcz</td>
+                            <td>26</td>
+                            <td>Male</td>
+                            <td>STI</td>
+                            <td>IT Head</td>
+                            <td>
+                              <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button">View</span> | <span class="action-button">Delete</span> 
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pagination-container mt-4">
+                      <div class="pager">
+                        <p>Limit per Page</p>
+                        <select class="form-select page-number" aria-label="Default select example">
+                          <option value="1">1</option>
+                          <option value="5">5</option>
+                          <option selected value="10">10</option>
+                        </select>
+                      </div>
+                      <nav aria-label="Page navigation example" class="bottom-pagination">
+                        <ul class="pagination justify-content-end">
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+            </section>
+            <!-- Modal -->
+            <div class="modal fade" id="viewTeacherModal" tabindex="-1" aria-labelledby="viewTeacherModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h2 class="modal-title fs-5" id="viewTeacherModalLabel">Acount Information</h2>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="" method="post">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                              <label for="firstname" class="col-sm-12 col-md-12 col-form-label">First Name</label>
+                              <input class="form-control mb-3" disabled  type="text"  id="firstname" name="firstname" >
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="lastname" class="col-sm-12 col-md-12 col-form-label">Last Name</label>
+                                <input class="form-control mb-3" disabled  type="text"  id="lastname" name="lastname" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                              <label for="gender" class="col-sm-12 col-md-12 col-form-label">Gender</label>
+                              <input class="form-control mb-3" disabled type="text"  id="gender" name="gender" >
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label for="age" class="col-sm-12 col-md-12 col-form-label">Age</label>
+                                <input class="form-control mb-3" disabled  type="text"  id="age" name="age" >
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label for="birthdate" class="col-sm-12  col-md-12 col-form-label">Birth Date</label>
+                                <input class="form-control  mb-3" disabled type="text" id="birthdate" name="birthdate" >
+                              </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                              <label for="mobile_number" class="col-sm-12 col-md-12 col-form-label">Mobile Number</label>
+                              <input class="form-control mb-3" disabled type="text"  id="mobile_number" name="mobile_number" >
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="email" class="col-sm-12 col-md-12 col-form-label">Email</label>
+                              <input class="form-control mb-3" disabled type="text"  id="email" name="email" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <label for="address" class="col-sm-12 col-md-12 col-form-label">Address</label>
+                                <textarea class="form-control mb-3" disabled  id="address" name="address" ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                              <label for="rank" class="col-sm-12 col-md-12 col-form-label">Rank</label>
+                              <input class="form-control mb-3" disabled type="text"  id="rank" name="rank" >
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="school" class="col-sm-12 col-md-12 col-form-label">School</label>
+                                <input class="form-control mb-3" disabled type="text" id="school" name="school" >
+                            </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
