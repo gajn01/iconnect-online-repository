@@ -3,7 +3,6 @@ $(document).ready(function(){
     $('#submit').click(function(){  
         var username = $('#username').val();  
         var password = $('#password').val();  
-
         if(username == '' || password == ''){  
             console.log('error');
             alert('All Fields are required!');
@@ -16,55 +15,20 @@ $(document).ready(function(){
                     password:password
                 },  
                 success: function(response) {
-
                     var jsonData = JSON.parse(response);
-                    alert(jsonData.success);
-
-                 /*    if (jsonData.success == "1")
+                    if (jsonData.success == "1")
                     {
+                        alert("Successfully login ");
+                        sessionStorage.setItem("account",response);
                         location.href = '../admin/pages/dashboard.html';
-                    } */
-
-
-
-                    /* if (jsonData.success == "1")
-                    {
-                        location.href = '../admin/pages/dashboard.html';
-                    }
-                    else
-                    {
+                    }else{
                         alert('Invalid Credentials!');
-                    } */
-                   
+                    }
                   },
                   error: function() {
-                    alert('There was some error performing the AJAX call!');
+                    alert('System error: Ajax not working properly');
                   }  
             }); 
         }
     });  
 });  
-
-
-
-/* $(document).ready(function(){  
-    $('#submit').click(function(){  
-        var email = $('#username').val();  
-        var message = $('#password').val();  
-        if(email == '' || message == ''){  
-            $('#error_message').html("All Fields are required");
-            $('.toast').toast('show');
-        }else{  
-            $.ajax({  
-                url:"insert.php",  
-                method:"POST",  
-                data:{email:email, message:message},  
-                success:function(data){
-                    $('.toast').toast('show');
-                    $('#error_message').html(data);  
-                }  
-            });  
-        }  
-    });  
-});  
- */
