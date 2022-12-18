@@ -236,45 +236,44 @@ table tbody{
 }
 .btn-bar{
     width: 60px;
-    background-color: #3264C6 !important;
+    background-color: #8bd4f6 !important;
     margin: 1rem 1rem 0 0 ;
 }
 .btn-bar:hover{
-    background-color: #0d6efd !important;
+    background-color: #019cde  !important;
 }
 .bars-icon{
     width: 30px;
     filter: invert(1);
 }
 .offcanvas-header{
-    background: #e0e8f8 !important;
+    background: #ffffff !important;
 }
 .offcanvas-body{
-    background: #315CB0 !important;
+    background: #8bd4f6 !important;
 }
-.topbar-content{
+.sidebar-content-mobile{
     margin-top: 4rem;
     display: grid !important;
     justify-content: center !important;
 }
-.topbar-content a{
+.sidebar-content-mobile a{
     font-size: 1.6rem;
     padding: .7rem;
     width: 220px;
-
     text-decoration: none;
-    color: #e0e8f8;
+    color: #000000;
     margin-bottom: 1.4rem;
 }
-.topbar-content a.active{
-    color: #315CB0 !important;
-    background-color: #e0e8f8;
-    border-radius: 50px;
+.sidebar-content-mobile a.active, .sidebar-content-mobile a:hover{
+    color: #000000 !important;
+    background-color: #ffffff;
+    border-radius: 15px;
 }
 .btn-logout-mobile{
     margin-top: 9rem;
-    background-color: #4B80EC !important;
-    color: #e0e8f8 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
     border: none !important;
     height: 40px !important;
     position: absolute;
@@ -282,14 +281,18 @@ table tbody{
     width: 210px;
     left: 5.6rem;
 }
+.btn-logout-mobile:hover{
+    background-color: #015c9f !important;
+    color: #ffffff !important;
+}
 
 /* Modal */
 .modal-header,.modal-footer{
-    background: #e0e8f8 !important;
+    background: #ffffff !important;
 }
 .modal-body{
     border-top: 2px solid #315CB0 !important;
-    background: #e0e8f8 !important;
+    background: #ffffff !important;
 }
 
 /* ---------------------------------------------------
