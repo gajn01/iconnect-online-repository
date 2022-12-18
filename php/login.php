@@ -12,17 +12,25 @@ include("connection.php"); //Establishing connection with our database
         $username = mysqli_real_escape_string($db, $username);
         $password = mysqli_real_escape_string($db, $password);
         $password = md5($password);
-//Check username and password from database
+        
         $sql=("SELECT * FROM tbl_account WHERE username='$username' and password='$password'");
         $result= mysqli_query($db,$sql);
-//If username and password exist in our database then create a session.
-//Otherwise echo error.
+        $form_data = array();
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                echo json_encode(array('success' => 1,'data' => $row));
+                $form_data['success'] = true;
+                $form_data['data'] = array(
+                       'id' => $row["id"],
+                       'username' => $row['username']
+                    );
+                echo json_encode($form_data);
             }
         }else {
-            echo json_encode(array('success' => 0));
+            $form_data['success'] = false;
+            $form_data['error_msg'] = "Invalid Credentials!";
+            
+            echo json_encode($form_data);
+
         }
         $db->close();
 ?>

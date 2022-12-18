@@ -29,10 +29,10 @@ $dataPoints = array(
     <title>Admin</title>
     <script>
         window.onload = function () {
-            let data = sessionStorage.getItem("account");
-            var jsonData = JSON.parse(data);
+            let account_info = sessionStorage.getItem("account");
+            var jsonData = JSON.parse(account_info);
 
-            console.log('account session:', jsonData);
+            console.log('account session:', jsonData.data);
             }
     </script>
 </head>

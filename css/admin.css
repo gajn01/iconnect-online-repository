@@ -10,11 +10,11 @@ html{
     overflow-y: hidden;
 }
 body{
-    background-color: #e0e8f8 !important;
-    color: #0038d0;
+    background-color: #ffffff !important;
+    color: #000000;
 }
 h1,h2{
-    color: #0038d0;
+    color: #000000;
 }
 .wrapper{
     display: grid;
@@ -30,7 +30,7 @@ h1,h2{
 }
 .circle{
     height: 130px;
-    background: #e0e8f8;
+    background: #ffffff;
     border-radius: 50%;
     width: 130px;
     padding: 0;
@@ -40,7 +40,8 @@ h1,h2{
 }
 .sidebar-nav{
     height: 100vh;
-    background-color: #315CB0;
+    background-color: #8bd4f6;
+    
 }
 .sidebar{
     text-align: center;
@@ -57,20 +58,20 @@ h1,h2{
     width: 220px;
     display: block;
     text-decoration: none;
-    color: #e0e8f8;
-    margin-bottom: 1.4rem;
+    color: #000000;
+    margin-bottom: 1rem;
 }
 .sidebar-content a.active , .sidebar-content a:hover{
-    color: #315CB0 !important;
-    background-color: #e0e8f8;
+    color: #000000 !important;
+    background-color: #ffffff;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 .btn-logout{
     margin-top: 9rem;
     width: 70%;
-    background-color: #4B80EC !important;
-    color: #e0e8f8 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
     border: none !important;
     height: 40px !important;
     position: absolute;
@@ -79,7 +80,9 @@ h1,h2{
     left: 1rem;
 }
 .btn-logout:hover{
-    background-color: rgba(50, 100, 198, 1) !important;
+    background-color: #015c9f !important;
+    color: #ffffff !important;
+    cursor: pointer;
 }
 
 /* topbar */
@@ -104,8 +107,8 @@ h1,h2{
 }
 .thumbnail .container .card{
     padding: 1.4rem;
-    background-color: #3264C6;
-    color: #FFFFFF;
+    background-color: #8bd4f6;
+    color: #000000;
     grid-column-gap: 50px;
 }
 .thumbnail .container .card .icon{
