@@ -133,19 +133,19 @@ h1,h2{
     overflow: auto;
 }
 .table-group-divider{
-    border-color: #A0B8E8 !important;
+    border-color: #8bd4f6  !important;
 }
 
 table thead th{
-    color: #3264C6;
+    color: #000000;
     font-weight: 600 !important;
     font-size: 1rem;
 }
 table tbody{
-    color: #3264C6;
+    color: #000000;
 }
 .table tr td:first-child {
-    border-right: 1px solid #A0B8E8;
+    border-right: 1px solid #8bd4f6;
 }
 .material-table{
     border-top-left-radius: 0;
@@ -174,8 +174,8 @@ table tbody{
     margin-top: rem;
 }
 .page-link{
-    background-color:#3264C6 !important;
-    color: #FFFFFF !important;
+    background-color:#8bd4f6 !important;
+    color: #000000 !important;
     border-radius: 10px !important;
 }
 .page-item{
@@ -189,7 +189,7 @@ table tbody{
     /* flex-direction: row-reverse; */
 }
 .pagination-container p{
-    color: #315CB0;
+    color: #000000;
 }
 .pager{
     display: flex;
@@ -198,11 +198,11 @@ table tbody{
 }
 .page-number{
     width: 75px !important;
-    border: 1px solid #3264C6 !important;
+    border: 1px solid #8bd4f6 !important;
     border-radius: 30px !important;
 }
 .nav-tabs .nav-link.active{
-    background-color: #3264C6 !important;
+    background-color: #8bd4f6 !important;
     color: #e0e8f8 !important;
 }
 /* Account  */
@@ -214,20 +214,24 @@ table tbody{
 
 }
 .btn-add{
-    background-color: #3264C6 !important;
-    border: none;
-    color: #e0e8f8;
+    background-color: #8bd4f6 !important;
+    border: none !important;
+    color: #000000 !important;
+}
+.btn-add:hover, .page-link:hover{
+    background-color: #019cde  !important;
+    color: #ffffff !important;
 }
 /* searchbar */
 .searchbar{
-    border-radius: 30px;
-    outline-color:#3264C6 ;
+    border-radius: 15px;
+    outline-color:#8bd4f6 ;
     cursor: pointer;
     background-color: #ffffff;
-    border: 1px solid #3264C6;
+    border: 3px solid #8bd4f6;
 }
 .searchbar, .searchbar::placeholder{
-    color: #3264C6;
+    color: #000000;
     padding: .4rem 1.3rem;
 }
 .btn-bar{
