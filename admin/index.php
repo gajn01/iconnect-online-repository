@@ -35,7 +35,7 @@
                             <input  type="password" id="password" name="password" placeholder="Enter Password">
                         </div>
                         <!-- <a data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" >Forgot Password?</a> -->
-                        <button type="button" name="submit" id="submit" class="btn btn-login" >Login</button>
+                        <button type="button" name="submit" id="submit" onClick="onLogin()" class="btn btn-login" >Login</button>
 
                       </form>
                     </div>
