@@ -48,11 +48,11 @@ body{
     width: 100%;
     border: none;
     font-size: 1.2rem;
-    height: 30px;
-    padding: .3rem 1.9rem;
+    height: 40px;
+  /*   padding: .3rem 1.9rem; */
     margin-bottom: 1.5rem;
-    background-color: transparent;
-    border-bottom: 1px solid #000000;
+   /*  background-color: transparent;
+    border-bottom: 1px solid #000000; */
     background-size: 1rem;
     background-position: 6px;
     background-repeat: no-repeat;
@@ -90,10 +90,10 @@ body{
 
 .login-form button{
     height: 50px;
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #015c9f;
     border-radius: 10px;
-    width: 60%;
+    width: 100%;
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-weight: 500;
@@ -101,9 +101,20 @@ body{
     line-height: 23px;
 }
 .login-form button:hover{
-    background-color: #015c9f;
+    background-color: #0038d0;
     color: #ffffff;
     cursor: pointer;
+}
+
+.signup-link{
+    color: #0038d0;
+    cursor: pointer;
+}
+.signup-link:hover{
+    color: #015c9f;
+}
+.require{
+    color: red;
 }
 
 /* Meduim size */

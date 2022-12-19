@@ -34,6 +34,18 @@ function onLogin() {
         }); 
     }
 }
+function onClickSignUp() {
+    location.href = '../user/pages/signup.html';
+}
+
+function onLogout() {
+    let text = "Are you sure you want to logout?";
+    if (confirm(text)) {
+        sessionStorage.removeItem("account");
+        location.href = '../index.php';
+    }
+}
+
 /* School  Function */
 function onViewSchool() {
     $.ajax({  
@@ -62,7 +74,8 @@ function onViewSchool() {
                     </tr>`;
                     table.innerHTML += template;
                 });
-                
+
+             
             }else{
                 alert(jsonData.error_msg);
             }
@@ -72,6 +85,21 @@ function onViewSchool() {
         }  
     }); 
 }
+function onGenerateListSchool(data) {
+
+}
+function onGenerateDropListSchool(data) {
+    data.forEach(element => {
+        var select = document.getElementById('school');
+        var opt = document.createElement('option');
+        opt.value = element.id;
+        opt.innerHTML = element.school_name;
+    
+        select.appendChild(opt);
+    });
+}
+
+
 function onClickAddSchoolModal() {
     document.getElementById("school_submit_btn_update").style.display="none";
     document.getElementById("school_submit_btn_add").style.display="block";
@@ -113,7 +141,7 @@ function onAddSchool() {
                 if (jsonData.success){
                     alert(jsonData.success_msg);
                     location.href = '../pages/school.html';
-                    onViewSchool();
+                    onGenerateListSchool(jsonData.data);
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -139,7 +167,7 @@ function onUpdateSchool() {
                 if (jsonData.success){
                     alert(jsonData.success_msg);
                     location.href = '../pages/school.html';
-                    onViewSchool();
+                    onGenerateListSchool(jsonData.data);
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -160,7 +188,7 @@ function onDeleteSchool(id) {
             if (jsonData.success){
                 alert(jsonData.success_msg);
                 location.href = '../pages/school.html';
-                onViewSchool();
+                onGenerateListSchool(jsonData.data);
             }else{
                 alert(jsonData.error_msg);
             }

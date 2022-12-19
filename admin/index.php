@@ -27,12 +27,10 @@
                       <h1>Welcome Admin!</h1>
                       <form id="submit_form">
                         <div>
-                            <div class="circle"></div>
-                            <input  type="text"  id="username" name="username" placeholder="Enter Username">
+                            <input class="form-control"  type="text"  id="username" name="username" placeholder="Enter Username">
                         </div>
                         <div>
-                            <div class="circle"></div>
-                            <input  type="password" id="password" name="password" placeholder="Enter Password">
+                            <input  class="form-control"   type="password" id="password" name="password" placeholder="Enter Password">
                         </div>
                         <!-- <a data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" >Forgot Password?</a> -->
                         <button type="button" name="submit" id="submit" onClick="onLogin()" class="btn btn-login" >Login</button>
