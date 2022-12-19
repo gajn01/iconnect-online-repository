@@ -65,7 +65,7 @@
                 <div class="header-button mt-5">
                   <input class="searchbar" type="text" name="searchbar" id="searchbar" placeholder="Search here...">
                   <!-- <button type="button" class="btn btn-primary btn-add">Filter</button> -->
-                <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#schooModal" onClick="onAddSchoolModal()">Add School</button>
+                <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#schooModal" onClick="onClickAddSchoolModal()">Add School</button>
                   </div>
               </section>
             <!-- Table data -->
@@ -134,6 +134,7 @@
                     </div>
                     <div class="modal-body">
                       <form id="school_form">
+                        <input class="form-control mb-3 d-none"   type="text"  id="school_id" name="school_id" >
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                               <label for="school_name" class="col-sm-12 col-md-12 col-form-label">School Name  <span class="require"> * </span></label>
