@@ -1,9 +1,12 @@
-    const school_id_input = document.getElementById("school_id");
-    const school_name_input = document.getElementById("school_name");
-    const school_address_input = document.getElementById("school_address");
+const school_id_input = document.getElementById("school_id");
+const school_name_input = document.getElementById("school_name");
+const school_address_input = document.getElementById("school_address");
 
-   
-   /* onLogin function */ 
+const subject_id_input = document.getElementById("subject_id");
+const subject_name_input = document.getElementById("subject_name");
+const subject_description_input = document.getElementById("subject_description");
+
+
 function onLogin() {
     var username = $('#username').val();  
     var password = $('#password').val();  
@@ -31,6 +34,7 @@ function onLogin() {
         }); 
     }
 }
+/* School  Function */
 function onViewSchool() {
     $.ajax({  
         url:"../../php/onviewschool.php",  
@@ -123,7 +127,6 @@ function onAddSchool() {
 function onUpdateSchool() {
     var school_name = $('#school_name').val();
     var school_address = $('#school_address').val();
-    var school_id = $('#school_id').val();
     if(school_name == '' || school_address == ''){  
         alert('All Fields are required!');
     }else{
@@ -132,7 +135,6 @@ function onUpdateSchool() {
             method:"POST",  
             data: $('#school_form').serialize(),  
             success: function(response) {
-                console.log('res:', response);
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
                     alert(jsonData.success_msg);
@@ -154,7 +156,6 @@ function onDeleteSchool(id) {
         method:"POST",  
         data: { school_id : id },  
         success: function(response) {
-            console.log('res:', response);
             var jsonData = JSON.parse(response);
             if (jsonData.success){
                 alert(jsonData.success_msg);
@@ -169,3 +170,148 @@ function onDeleteSchool(id) {
             }  
     }); 
 }
+
+
+/* Subject  Function */
+function onViewSubject() {
+    $.ajax({  
+        url:"../../php/onviewsubject.php",  
+        method:"GET",  
+        data: "",  
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+            var table = document.querySelector("table");
+            var template;
+            if (jsonData.success){
+                console.log('subejct:',response);
+                sessionStorage.setItem("subject_list",response);
+                var ctr=0;
+                jsonData.data.forEach(element => {
+                        ctr = ctr + 1;
+                        template = 
+                    `<tr>
+                        <td>${ctr}</td>
+                        <td>${element.id}</td>
+                        <td>${element.subject_name}</td>
+                        <td>${element.subject_description}</td>
+                        <td>
+                            <span  data-bs-toggle="modal" data-bs-target="#subjectModal" class="action-button" onClick="onClickEditSubject(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSubject(${element.id})">Delete</span> 
+                        </td>
+                    </tr>`;
+                    table.innerHTML += template;
+                });
+                
+            }else{
+                /* alert(jsonData.error_msg); */
+                template = 
+                    `<tr >
+                        <td colspan="5" >${jsonData.error_msg}</td>
+                    </tr>`;
+                table.innerHTML += template;
+            }
+        },
+        error: function() {
+            alert('System error: Ajax not working properly');
+        }  
+    }); 
+}
+function onClickAddSubjectModal() {
+    document.getElementById("subject_submit_btn_update").style.display="none";
+    document.getElementById("subject_submit_btn_add").style.display="block";
+    subject_name_input.value = "";
+    subject_description_input.innerText = "";
+}
+function onClickEditSubject(id) {
+    let subject_list = sessionStorage.getItem("subject_list");
+    var jsonData = JSON.parse(subject_list);
+    document.getElementById("subject_submit_btn_update").style.display="block";
+    document.getElementById("subject_submit_btn_add").style.display="none";
+    jsonData.data.forEach(element => {
+        if(element.id == id){
+            subject_name_input.value = element.subject_name;
+            subject_description_input.innerText = element.subject_description;
+            subject_id_input.value = element.id
+        }
+    });
+}
+function onClickDeleteSubject(id) {
+    let text = "Do you want to delete the record?";
+    if (confirm(text)) {
+        onDeleteSubject(id);
+    }
+}
+function onAddSubject() {
+    var subject_name = $('#subject_name').val();
+    var subject_description = $('#subject_description').val();
+    if(subject_name == '' || subject_description == ''){  
+        alert('All Fields are required!');
+    }else{
+        $.ajax({  
+            url:"../../php/onaddsubject.php",  
+            method:"POST",  
+            data: $('#subject_form').serialize(),  
+            success: function(response) {
+                console.log('resL:',response);
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+                    alert(jsonData.success_msg);
+                    location.href = '../pages/subject.html';
+                    onViewSubject();
+                }else{
+                    alert(jsonData.error_msg);
+                }
+                },
+                error: function() {
+                alert('System error: Ajax not working properly');
+                }  
+        }); 
+    }
+} 
+function onUpdateSubject() {
+    var subject_name = $('#subject_name').val();
+    var subject_description = $('#subject_description').val();
+    if(subject_name == '' || subject_description == ''){  
+        alert('All Fields are required!');
+    }else{
+        $.ajax({  
+            url:"../../php/onupdatesubject.php",  
+            method:"POST",  
+            data: $('#subject_form').serialize(),  
+            success: function(response) {
+                console.log('res:',response);
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+                    alert(jsonData.success_msg);
+                    location.href = '../pages/subject.html';
+                    onViewSchool();
+                }else{
+                    alert(jsonData.error_msg);
+                }
+                },
+                error: function() {
+                alert('System error: Ajax not working properly');
+                }  
+        }); 
+    }
+}
+function onDeleteSubject(id) {
+    $.ajax({  
+        url:"../../php/ondeletesubject.php",  
+        method:"POST",  
+        data: { subject_id : id },  
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+            if (jsonData.success){
+                alert(jsonData.success_msg);
+                location.href = '../pages/subject.html';
+                onViewSchool();
+            }else{
+                alert(jsonData.error_msg);
+            }
+            },
+            error: function() {
+            alert('System error: Ajax not working properly');
+            }  
+    }); 
+}
+
