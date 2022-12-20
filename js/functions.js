@@ -343,42 +343,72 @@ function onLogout() {
         }); 
     }
 /* ADMIN */
-function onSignUp() {
-    var username = $('#username').val();
-    var password = $('#password').val();
-    var confirm_password = $('#confirm_password').val();
-    var firstname = $('#firstname').val();
-    var lastname = $('#lastname').val();
-    var gender = $('#gender').val();
-    var age = $('#age').val();
-
-    if(school_name == '' || school_address == ''){  
-        alert('All Fields are required!');
-    }else{
-        $.ajax({  
-            url:"../../php/onaddschool.php",  
-            method:"POST",  
-            data: $('#school_form').serialize(),  
-            success: function(response) {
-                var jsonData = JSON.parse(response);
-                if (jsonData.success){
-                    alert(jsonData.success_msg);
-                    location.href = '../pages/school.html';
-                    onViewSchool();
-                }else{
-                    alert(jsonData.error_msg);
-                }
-                },
-                error: function() {
-                alert('System error: Ajax not working properly');
-                }  
-        }); 
-    }
-}   
+ 
 
 /* USER */
 
+    function onSignUp() {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var confirm_password = $('#confirm_password').val();
+        var firstname = $('#firstname').val();
+        var lastname = $('#lastname').val();
+        var gender = $('#gender').val();
+        var age = $('#age').val();
+        var birthdate = $('#birthdate').val();
+        var mobile_number = $('#mobile_number').val();
+        var email = $('#email').val();
+        var address = $('#address').val();
+        var rank = $('#rank').val();
+        var school = $('#school').val();
+       /*  if(password != confirm_password ){
+            alert('Password and confirm password does not match!');
+        }else{ */
+           /*  if(username == '' && firstname == '' && lastname == '' && gender == '' && age == '' && birthdate == '' && mobile_number == ''&& email == '' && address == '' && rank == '' && school == ''){  
+                alert('All Fields are required!');
+            }else{ */
+                /* Check if Username is existing */
+                $.ajax({  
+                    url:"../../php/onsignup.php",  
+                    method:"POST",  
+                    data: $('#signup_form').serialize(),  
+                    success: function(response) {
+                        console.log('check result: ',response);
+                        var jsonData = JSON.parse(response);
+                        if (jsonData.success){
+                            alert(jsonData.success_msg);
+                        }else{
+                            alert(jsonData.error_msg);
+                        }
+                        },
+                        error: function() {
+                        alert('System error: Ajax not working properly');
+                        }  
+                }); 
 
+                /* Check if Username is existing */
+/* 
+                $.ajax({  
+                    url:"../../php/onsignup.php",  
+                    method:"POST",  
+                    data: $('#signup_form').serialize(),  
+                    success: function(response) {
+                        var jsonData = JSON.parse(response);
+                        if (jsonData.success){
+                            alert(jsonData.success_msg);
+                            location.href = '../pages/school.html';
+                            onViewSchool();
+                        }else{
+                            alert(jsonData.error_msg);
+                        }
+                        },
+                        error: function() {
+                        alert('System error: Ajax not working properly');
+                        }  
+                });  */
+           /*  } */
+       /*  } */
+    }  
 /* USER */
 
 
