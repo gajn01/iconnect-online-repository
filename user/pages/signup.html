@@ -11,14 +11,17 @@
     <title>iConnect - Signup</title>
     <script>
         window.onload = function () {
+            onViewSchool();
             let school_list = sessionStorage.getItem("school_list");
-            if(!school_list){
+            var jsonData = JSON.parse(school_list);
+
+            onGenerateDropListSchool(jsonData.data);
+            /* if(!school_list){
                 onViewSchool();
             }else{
-                var jsonData = JSON.parse(school_list);
                 console.log("school list: ",jsonData );
                 onGenerateDropListSchool(jsonData.data);
-            }
+            } */
         }
       </script>
 </head>

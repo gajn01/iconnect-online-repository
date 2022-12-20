@@ -1,5 +1,4 @@
 <?php
-    session_start();
     include("connection.php"); 
     $status_id = $_POST['status_id'];
     $sql=("SELECT 

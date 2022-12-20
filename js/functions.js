@@ -107,7 +107,7 @@ function onLogout() {
                 <td>${element.school_name}</td>
                 <td>${element.school_address}</td>
                 <td>
-                    <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditSchool(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSchool(${element.id})">Delete</span> 
+                    <span  data-bs-toggle="modal" data-bs-target="#schooModal" class="action-button" onClick="onClickEditSchool(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSchool(${element.id})">Delete</span> 
                 </td>
             </tr>`;
             table.innerHTML += template;

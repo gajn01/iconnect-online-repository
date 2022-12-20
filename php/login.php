@@ -4,8 +4,8 @@ include("connection.php"); //Establishing connection with our database
 
 
 // Define $username and $password
-        $username=$_POST['username'];
-        $password=$_POST['password'];
+        $username= $_POST['username'];
+        $password= $_POST['password'];
 // To protect from MySQL injection
         $username = stripslashes($username);
         $password = stripslashes($password);
