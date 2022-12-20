@@ -1,11 +1,24 @@
+/* School fields */
 const school_id_input = document.getElementById("school_id");
 const school_name_input = document.getElementById("school_name");
 const school_address_input = document.getElementById("school_address");
-
+/* Subject fields */
 const subject_id_input = document.getElementById("subject_id");
 const subject_name_input = document.getElementById("subject_name");
 const subject_description_input = document.getElementById("subject_description");
-
+/* Request fields */
+const firstname_input = document.getElementById("firstname");
+const lastname_input = document.getElementById("lastname");
+const gender_input = document.getElementById("gender");
+const age_input = document.getElementById("age");
+const birthdate_input = document.getElementById("birthdate");
+const mobile_number_input = document.getElementById("mobile_number");
+const email_input = document.getElementById("email");
+const address_input = document.getElementById("address");
+const rank_input = document.getElementById("rank");
+const school_input = document.getElementById("school");
+const status_input = document.getElementById("status");
+const request_id_input = document.getElementById("request_id");
 
 function onLogin() {
     var username = $('#username').val();  
@@ -65,6 +78,7 @@ function onLogout() {
             method:"GET",  
             data: "",  
             success: function(response) {
+                sessionStorage.removeItem("school_list");
                 var jsonData = JSON.parse(response);
                 console.log(jsonData.data);
                 if (jsonData.success){
@@ -202,6 +216,7 @@ function onLogout() {
             method:"GET",  
             data: "",  
             success: function(response) {
+                sessionStorage.removeItem("subject_list");
                 var jsonData = JSON.parse(response);
                 var table = document.querySelector("table");
                 var template;
@@ -341,9 +356,10 @@ function onLogout() {
     function onViewRequest() {
         $.ajax({  
             url:"../../php/onviewrequest.php",  
-            method:"GET",  
-            data: "",  
+            method:"POST",  
+            data: {status_id: 0},  
             success: function(response) {
+                sessionStorage.removeItem("request_list");
                 var jsonData = JSON.parse(response);
                 var table = document.querySelector("table");
                 var template;
@@ -354,7 +370,7 @@ function onLogout() {
                     /* alert(jsonData.error_msg); */
                     template = 
                         `<tr >
-                            <td colspan="5" >${jsonData.error_msg}</td>
+                            <td colspan="9" >${jsonData.error_msg}</td>
                         </tr>`;
                     table.innerHTML += template;
                 }
@@ -379,7 +395,7 @@ function onLogout() {
             template = 
                 `<tr>
                     <td>${ctr}</td>
-                    <td>${element.id}</td>
+                    <td>${element.account_id}</td>
                     <td>${element.firstname+' '+element.lastname}</td>
                     <td>${element.age}</td>
                     <td>${element.gender}</td>
@@ -387,12 +403,104 @@ function onLogout() {
                     <td>${element.rank}</td>
                     <td>${status}</td>
                     <td>
-                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditSchool(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSchool(${element.id})">Delete</span> 
+                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditRequest(${element.id})" >Edit</span>  
                     </td>
                 </tr>`;
             table.innerHTML += template;
         });
     }
+    function onClickEditRequest(id) {
+        let request_list = sessionStorage.getItem("request_list");
+        var jsonData = JSON.parse(request_list);
+        console.log("check data: ",jsonData.data);
+        jsonData.data.forEach(element => {
+            if(element.id == id){
+                 firstname_input.value = element.firstname;
+                 lastname_input.value = element.lastname;
+                 gender_input.value = element.gender;
+                 age_input.value = element.age;
+                 birthdate_input.value = element.birthdate;
+                 mobile_number_input.value = element.mobile_number;
+                 email_input.value = element.email;
+                 address_input.value = element.address;
+                 rank_input.value = element.rank;
+                 school_input.value =element.school_name;
+                 status_input.value = element.status;
+                 request_id_input.value = element.id
+            }
+        });
+    }
+    function onUpdateRequest() {
+        $.ajax({  
+            url:"../../php/onupdaterequest.php",  
+            method:"POST",  
+            data: $('#request_form').serialize(),  
+            success: function(response) {
+                console.log('res:',response);
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+                    onViewRequest();
+                    alert(jsonData.success_msg);
+                    location.href = '../pages/request.html';
+                }else{
+                    alert(jsonData.error_msg);
+                }
+                },
+                error: function() {
+                alert('System error: Ajax not working properly');
+                }  
+        }); 
+    }
+    /* Teacher Function */
+    function onViewTeacher() {
+        $.ajax({  
+            url:"../../php/onviewrequest.php",  
+            method:"POST",  
+            data: {status_id: 1},  
+            success: function(response) {
+                sessionStorage.removeItem("teacher_list");
+                var jsonData = JSON.parse(response);
+                var table = document.querySelector("table");
+                var template;
+                if (jsonData.success){
+                    sessionStorage.setItem("teacher_list",response);
+                }else{
+                    /* alert(jsonData.error_msg); */
+                    template = 
+                        `<tr >
+                            <td colspan="9" >${jsonData.error_msg}</td>
+                        </tr>`;
+                    table.innerHTML += template;
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+    }
+    function onGenerateListTeacher(data) {
+        var table = document.querySelector("table");
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            template = 
+                `<tr>
+                    <td>${ctr}</td>
+                    <td>${element.account_id}</td>
+                    <td>${element.firstname+' '+element.lastname}</td>
+                    <td>${element.age}</td>
+                    <td>${element.gender}</td>
+                    <td>${element.school_name}</td>
+                    <td>${element.rank}</td>
+                    <td>
+                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditRequest(${element.id})" >Edit</span>  
+                    </td>
+                </tr>`;
+            table.innerHTML += template;
+        });
+    }
+
 /* ADMIN */
  
 

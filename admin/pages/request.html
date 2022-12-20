@@ -33,11 +33,10 @@
                     <a href="../pages/dashboard.html"  >Dashboard</a>
                     <a href=""  class="active">Request</a>
                     <a href="../pages/school.html">School</a>
-                    <a href="../pages/material.php">Teacher</a>
+                    <a href="../pages/teacher.html">Teacher</a>
                     <a href="../pages/subject.html" >Subject</a>
                 </div>
                 <a class="btn btn-primary btn-logout" onClick="onLogout()">Logout</a>
-
             </div>
         </nav>
         <div class="content">
@@ -134,7 +133,8 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <form action="" method="post">
+                      <form id="request_form">
+                        <input class="form-control mb-3 d-none"   type="text"  id="request_id" name="request_id" >
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                               <label for="firstname" class="col-sm-12 col-md-12 col-form-label">First Name</label>
@@ -189,16 +189,17 @@
                             <div class="col-md-6 col-sm-12">
                                 <label for="status" class="col-sm-12 col-md-12 col-form-label">Status</label>
                                 <select class="form-select form-control" aria-label="Default select example" id="status" name="status" >
-                                  <option value="1" selected >Pending</option>
-                                  <option value="2">Accept</option>
-                                  <option value="3">Reject</option>
+                                  <option value="0" selected >Pending</option>
+                                  <option value="1">Accept</option>
+                                  <option value="2">Reject</option>
                                 </select>
                               </div>
                         </div>
                       </form>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-primary">Submit</button>
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" >Cancel</button>
+                      <button type="button" class="btn btn-primary" onClick="onUpdateRequest()">Update</button>
                     </div>
                   </div>
                 </div>
