@@ -409,6 +409,34 @@ function onLogout() {
             }
         }
     }  
+
+    function onLoginUser() {
+        var username = $('#username').val();  
+        var password = $('#password').val();  
+        
+        if(username == '' || password == ''){  
+            alert('All Fields are required!');
+        }else{
+            $.ajax({  
+                url:"../php/loginuser.php",  
+                method:"POST",  
+                data: $('#login_form_user').serialize(),  
+                success: function(response) {
+                    var jsonData = JSON.parse(response);
+                    if (jsonData.success){
+                        alert("Successfully login ");
+                        sessionStorage.setItem("user_account",response);
+                        location.href = '../user/pages/landing.html';
+                    }else{
+                        alert(jsonData.error_msg);
+                    }
+                },
+                error: function() {
+                    alert('System error: Ajax not working properly');
+                }  
+            }); 
+        }
+    }
 /* USER */
 
 

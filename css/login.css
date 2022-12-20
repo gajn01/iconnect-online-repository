@@ -40,11 +40,10 @@ body{
     font-weight: 500;
     font-size: 2rem;
     line-height: 44px;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     color: #000000;
 }
-.login-form input{
-    width: 100%;
+.login-form input:not([type="checkbox"]){
     border: none;
     font-size: 1.2rem;
     height: 40px;
@@ -114,6 +113,12 @@ body{
 }
 .require{
     color: red;
+}
+.condition{
+    text-decoration: underline;
+}
+small,.condition{
+    font-size: .8rem !important;
 }
 
 /* Meduim size */
