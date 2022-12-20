@@ -8,6 +8,8 @@ const subject_name_input = document.getElementById("subject_name");
 const subject_description_input = document.getElementById("subject_description");
 /* Request fields */
 const firstname_input = document.getElementById("firstname");
+const firstname_teacher_input = document.getElementById("firstname_teacher");
+
 const lastname_input = document.getElementById("lastname");
 const gender_input = document.getElementById("gender");
 const age_input = document.getElementById("age");
@@ -494,10 +496,31 @@ function onLogout() {
                     <td>${element.school_name}</td>
                     <td>${element.rank}</td>
                     <td>
-                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditRequest(${element.id})" >Edit</span>  
+                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickViewTeacher(${element.id})" >Edit</span>  
                     </td>
                 </tr>`;
             table.innerHTML += template;
+        });
+    }
+    function onClickViewTeacher(id) {
+        let teacher_list = sessionStorage.getItem("teacher_list");
+        var jsonData = JSON.parse(teacher_list);
+        console.log("check data: ",jsonData.data);
+        jsonData.data.forEach(element => {
+            if(element.id == id){
+                 firstname_input.value = element.firstname;
+                 lastname_input.value = element.lastname;
+                 gender_input.value = element.gender;
+                 age_input.value = element.age;
+                 birthdate_input.value = element.birthdate;
+                 mobile_number_input.value = element.mobile_number;
+                 email_input.value = element.email;
+                 address_input.value = element.address;
+                 rank_input.value = element.rank;
+                 school_input.value =element.school_name;
+                 status_input.value = element.status;
+                 request_id_input.value = element.id
+            }
         });
     }
 
