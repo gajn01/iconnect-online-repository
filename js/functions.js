@@ -40,8 +40,6 @@ function goToSIgnup() {
 function goToLogin() {
     location.href = '../index.html';
 }
-
-
 function onLogout() {
     let text = "Are you sure you want to logout?";
     if (confirm(text)) {
@@ -50,6 +48,16 @@ function onLogout() {
     }
 }
 /* ADMIN */
+    function onGenerateDropListSchool(data) {
+        data.forEach(element => {
+            var select = document.getElementById('school');
+            var opt = document.createElement('option');
+            opt.value = element.id;
+            opt.innerHTML = element.school_name;
+        
+            select.appendChild(opt);
+        });
+    }
 /* School  Function */
     function onViewSchool() {
         $.ajax({  
@@ -61,25 +69,6 @@ function onLogout() {
                 console.log(jsonData.data);
                 if (jsonData.success){
                     sessionStorage.setItem("school_list",response);
-                    var table = document.querySelector("table");
-                    var template;
-                    var ctr=0;
-                    jsonData.data.forEach(element => {
-                            ctr = ctr + 1;
-                            template = 
-                        `<tr>
-                            <td>${ctr}</td>
-                            <td>${element.id}</td>
-                            <td>${element.school_name}</td>
-                            <td>${element.school_address}</td>
-                            <td>
-                                <span  data-bs-toggle="modal" data-bs-target="#schooModal" class="action-button" onClick="onClickEditSchool(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSchool(${element.id})">Delete</span> 
-                            </td>
-                        </tr>`;
-                        table.innerHTML += template;
-                    });
-
-                
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -90,16 +79,22 @@ function onLogout() {
         }); 
     }
     function onGenerateListSchool(data) {
-
-    }
-    function onGenerateDropListSchool(data) {
+        var table = document.querySelector("table");
+        var template;
+        var ctr=0;
         data.forEach(element => {
-            var select = document.getElementById('school');
-            var opt = document.createElement('option');
-            opt.value = element.id;
-            opt.innerHTML = element.school_name;
-        
-            select.appendChild(opt);
+                ctr = ctr + 1;
+                template = 
+            `<tr>
+                <td>${ctr}</td>
+                <td>${element.id}</td>
+                <td>${element.school_name}</td>
+                <td>${element.school_address}</td>
+                <td>
+                    <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditSchool(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSchool(${element.id})">Delete</span> 
+                </td>
+            </tr>`;
+            table.innerHTML += template;
         });
     }
     function onClickAddSchoolModal() {
@@ -141,9 +136,9 @@ function onLogout() {
                 success: function(response) {
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
+                        onViewSchool();
                         alert(jsonData.success_msg);
                         location.href = '../pages/school.html';
-                        onViewSchool();
                     }else{
                         alert(jsonData.error_msg);
                     }
@@ -167,9 +162,9 @@ function onLogout() {
                 success: function(response) {
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
+                        onViewSchool();
                         alert(jsonData.success_msg);
                         location.href = '../pages/school.html';
-                        onViewSchool();
                     }else{
                         alert(jsonData.error_msg);
                     }
@@ -188,9 +183,9 @@ function onLogout() {
             success: function(response) {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
+                    onViewSchool();
                     alert(jsonData.success_msg);
                     location.href = '../pages/school.html';
-                    onViewSchool();
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -342,6 +337,62 @@ function onLogout() {
                 }  
         }); 
     }
+    /* Request Function */
+    function onViewRequest() {
+        $.ajax({  
+            url:"../../php/onviewrequest.php",  
+            method:"GET",  
+            data: "",  
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+                var table = document.querySelector("table");
+                var template;
+                if (jsonData.success){
+                    console.log('request:',response);
+                    sessionStorage.setItem("request_list",response);
+                }else{
+                    /* alert(jsonData.error_msg); */
+                    template = 
+                        `<tr >
+                            <td colspan="5" >${jsonData.error_msg}</td>
+                        </tr>`;
+                    table.innerHTML += template;
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+    }
+    function onGenerateListRequest(data) {
+        var table = document.querySelector("table");
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            var status;
+            if(element.status == 0){
+                status ="Pending";
+            }else if(element.status == 1){
+                status = "Approved";
+            }
+            template = 
+                `<tr>
+                    <td>${ctr}</td>
+                    <td>${element.id}</td>
+                    <td>${element.firstname+' '+element.lastname}</td>
+                    <td>${element.age}</td>
+                    <td>${element.gender}</td>
+                    <td>${element.school_name}</td>
+                    <td>${element.rank}</td>
+                    <td>${status}</td>
+                    <td>
+                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditSchool(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSchool(${element.id})">Delete</span> 
+                    </td>
+                </tr>`;
+            table.innerHTML += template;
+        });
+    }
 /* ADMIN */
  
 
@@ -409,7 +460,6 @@ function onLogout() {
             }
         }
     }  
-
     function onLoginUser() {
         var username = $('#username').val();  
         var password = $('#password').val();  

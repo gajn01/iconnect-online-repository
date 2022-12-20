@@ -11,10 +11,17 @@
     <script>
       window.onload = function () {
           onViewSchool();
-     /*      let school_list = sessionStorage.getItem("school_list");
+          let school_list = sessionStorage.getItem("school_list");
           var jsonData = JSON.parse(school_list);
-         */
-          }
+          console.log('check data: ',jsonData );
+          onGenerateListSchool(jsonData.data);
+
+          /* if(!school_list){
+            onViewSchool();
+          }else{
+            onGenerateListSchool(jsonData.data);
+          } */
+      }
     </script>
 </head>
 <body>

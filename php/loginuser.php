@@ -11,8 +11,6 @@ include("connection.php");
         $password = mysqli_real_escape_string($db, $password);
         $password = md5($password);
         
-
-        
         $sql=("SELECT 
         tbl_account_profile.firstname,
         tbl_account_profile.lastname, 
