@@ -346,7 +346,6 @@ function onLogout() {
  
 
 /* USER */
-
     function onSignUp() {
         var username = $('#username').val();
         var password = $('#password').val();
@@ -361,12 +360,12 @@ function onLogout() {
         var address = $('#address').val();
         var rank = $('#rank').val();
         var school = $('#school').val();
-       /*  if(password != confirm_password ){
+        if(password != confirm_password ){
             alert('Password and confirm password does not match!');
-        }else{ */
-           /*  if(username == '' && firstname == '' && lastname == '' && gender == '' && age == '' && birthdate == '' && mobile_number == ''&& email == '' && address == '' && rank == '' && school == ''){  
+        }else{
+            if(username == '' || firstname == '' || lastname == '' || gender == '' || age == '' || birthdate == '' || mobile_number == ''|| email == '' || address == '' || rank == '' || school == ''){  
                 alert('All Fields are required!');
-            }else{ */
+            }else{
                 /* Check if Username is existing */
                 $.ajax({  
                     url:"../../php/onsignup.php",  
@@ -377,6 +376,7 @@ function onLogout() {
                         var jsonData = JSON.parse(response);
                         if (jsonData.success){
                             alert(jsonData.success_msg);
+                            goToLogin();
                         }else{
                             alert(jsonData.error_msg);
                         }
@@ -406,8 +406,8 @@ function onLogout() {
                         alert('System error: Ajax not working properly');
                         }  
                 });  */
-           /*  } */
-       /*  } */
+            }
+        }
     }  
 /* USER */
 
