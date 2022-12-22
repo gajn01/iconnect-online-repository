@@ -15,28 +15,24 @@
                 location.href = '../index.html';
             }else{
                 var jsonData = JSON.parse(user_account);
-                console.log("account info: ",jsonData );
                 document.getElementById('account_name_label').innerText =  jsonData.data.firstname + " " + jsonData.data.lastname;
-
                 onViewSubject();
                 let subject_list = sessionStorage.getItem("subject_list");
                 var jsonData = JSON.parse(subject_list);
-                console.log('check data: ',jsonData );
-                   
                 subject_container = document.querySelector('#thumbnail-container');
                 const color_array = ['primary','secondary','purple','green','primary'];
-                 var ctr=0;
+                var ctr=0;
                 jsonData.data.forEach(element => {
-                    console.log("element: ",element);    
                     let newCard = document.createElement('div');
                     newCard.classList.add(color_array[ctr]);
                     newCard.classList.add('card');
+                    /* newCard.onclick = function(){ onClickViewSubjectUser(2); }; */
+                    newCard.setAttribute("onclick","onClickViewSubjectUser( "+ element.id +")");
                     if(element.subject_description.length > 100){
                         subject_description = element.subject_description.substring(0,100)+ '...';
                     }else{
                         subject_description = element.subject_description;
                     }
-
                     let card_template = `
                         <h3>${element.subject_name}</h3>
                         <p>${subject_description}</p>
@@ -52,7 +48,6 @@
                 newCard.innerHTML = card_template;
                 ctr = ctr + 1;
                 });
-                
             }
         }
       </script>
@@ -61,16 +56,18 @@
 <body>
     <div class="wrapper">
         <nav id="topbar-nav">
-            <div class="logo-container">
-                <img src="../../assets/logo.png" width="60px" alt="">
+            <div class="container topbar">
+                <div class="logo-container">
+                    <img src="../../assets/logo.png" width="60px" alt="">
+                </div>
+                <a href="" id="account_name_label" >user user </a>
             </div>
-            <a href="" id="account_name_label" >user user</a>
         </nav>
         <div class="content">
             <div class="container">
                 <nav aria-label="breadcrumb ">
                     <ol class="breadcrumb mt-5">
-                      <li class="breadcrumb-item"><a href="#"><h2>Subject</h2> </a></li>
+                      <li class="breadcrumb-item"><a href="#">Subject</a></li>
                     </ol>
                   </nav>
                 <div class="row mt-5 justify-content-between" id="thumbnail-container"></div>

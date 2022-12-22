@@ -16,6 +16,10 @@ body{
     display: flex;
     align-items: center;
 }
+.topbar{
+    display: flex;
+    justify-content: space-between;
+}
 #topbar-nav{
     background-color: #015c9f;
     display: flex;
@@ -26,6 +30,11 @@ body{
 #topbar-nav a{
     text-decoration: none;
     color: white;
+}
+nav a{
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #000000;
 }
 #thumbnail-container{
     display: grid;

@@ -221,7 +221,6 @@ function onLogout() {
                 sessionStorage.removeItem("subject_list");
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
-                    console.log('subejct:',response);
                     sessionStorage.setItem("subject_list",response);
                 }else{
                     /* alert(jsonData.error_msg); */
@@ -617,6 +616,9 @@ function onLogout() {
                 }  
             }); 
         }
+    }
+    function onClickViewSubjectUser(data) {
+        location.href = '../pages/subject-details.html';
     }
 /* USER */
 
