@@ -17,9 +17,46 @@
                 var jsonData = JSON.parse(user_account);
                 console.log("account info: ",jsonData );
                 document.getElementById('account_name_label').innerText =  jsonData.data.firstname + " " + jsonData.data.lastname;
+
+                onViewSubject();
+                let subject_list = sessionStorage.getItem("subject_list");
+                var jsonData = JSON.parse(subject_list);
+                console.log('check data: ',jsonData );
+                   
+                subject_container = document.querySelector('#thumbnail-container');
+                const color_array = ['primary','secondary','purple','green','primary'];
+                 var ctr=0;
+                jsonData.data.forEach(element => {
+                    console.log("element: ",element);    
+                    let newCard = document.createElement('div');
+                    newCard.classList.add(color_array[ctr]);
+                    newCard.classList.add('card');
+                    if(element.subject_description.length > 100){
+                        subject_description = element.subject_description.substring(0,100)+ '...';
+                    }else{
+                        subject_description = element.subject_description;
+                    }
+
+                    let card_template = `
+                        <h3>${element.subject_name}</h3>
+                        <p>${subject_description}</p>
+
+                        <footer class="mt-4">
+                            <p class="modules-count">Modules: <span>20</span></p>
+                        </footer>
+                    `;
+
+                    subject_container.appendChild(newCard);
+    
+                // Inject the template html on DOM's new append item
+                newCard.innerHTML = card_template;
+                ctr = ctr + 1;
+                });
+                
             }
         }
       </script>
+</script>
 </head>
 <body>
     <div class="wrapper">
@@ -27,126 +64,20 @@
             <div class="logo-container">
                 <img src="../../assets/logo.png" width="60px" alt="">
             </div>
-            <a href="" id="account_name_label" >Junryl Bejerano</a>
+            <a href="" id="account_name_label" >user user</a>
         </nav>
         <div class="content">
-            
             <div class="container">
                 <nav aria-label="breadcrumb ">
                     <ol class="breadcrumb mt-5">
-                      <li class="breadcrumb-item"><a href="#">Subject</a></li>
+                      <li class="breadcrumb-item"><a href="#"><h2>Subject</h2> </a></li>
                     </ol>
                   </nav>
-                <div class="row mt-5">
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p><a href="subject-details.html">Math</a></p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span></p>
-                            </footer>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p>E-Sports</p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span> </p>
-                            </footer>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p>Physical Education</p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span> </p>
-                            </footer>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p>Cutting</p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span> </p>
-                            </footer>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p>E-Sports</p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span> </p>
-                            </footer>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p>Physical Education</p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span> </p>
-                            </footer>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p>Cutting</p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span> </p>
-                            </footer>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3 mb-5 text-center">
-                        <div class="card">
-                            <p>Cutting</p>
-                            <div class="card-desc text-start">
-                                <p >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, rem quam! Reprehenderit praesentium rem sint.
-                                </p>
-                            </div>
-                            <footer class="mt-4">
-                               <p class="modules-count">Modules: <span>20</span> </p>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
+                <div class="row mt-5 justify-content-between" id="thumbnail-container"></div>
             </div>
         </div>
     </div>
-    <script src="../js/functions.js"></script>
+    <script src="../../js/functions.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

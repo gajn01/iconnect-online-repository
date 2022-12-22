@@ -16,7 +16,6 @@ body{
     display: flex;
     align-items: center;
 }
-
 #topbar-nav{
     background-color: #015c9f;
     display: flex;
@@ -28,13 +27,18 @@ body{
     text-decoration: none;
     color: white;
 }
-
+#thumbnail-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
 .card{
-    background: #015c9f !important;
+    background: #015c9f ;
     color: white;
     padding: 1rem;
     min-height: 300px;
     cursor: pointer;
+    box-shadow: 5px 5px 10px #ccc;
 }
 .card:hover{
     background: #019cde !important;
@@ -68,7 +72,6 @@ body{
     color: #3264C6;
     padding: .4rem 1.3rem;
 }
-
 
 /* Table */
 .table-content{
@@ -137,4 +140,40 @@ table tbody{
     border: 1px solid #3264C6 !important;
     border-radius: 30px !important;
 }
+
+.primary{
+    background-color: #015c9f !important;
+}
+.secondary{
+    background-color: #019cde !important;
+}
+
+.card.purple {
+background: linear-gradient(150deg, #f731db, #4600f1 100%) !important;
+}
+
+.card.green {
+background: linear-gradient(150deg, #39ef74, #4600f1 100%) ;
+}
+
+@media (min-width: 576px) { 
+    #thumbnail-container{
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+ }
+
+@media (min-width: 768px) { 
+    #thumbnail-container{
+        grid-template-columns: 1fr 1fr ;
+        gap: 1rem;
+    }
+ }
+
+@media (min-width: 992px) { 
+    #thumbnail-container{
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+    }
+ }
 

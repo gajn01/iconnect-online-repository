@@ -220,27 +220,9 @@ function onLogout() {
             success: function(response) {
                 sessionStorage.removeItem("subject_list");
                 var jsonData = JSON.parse(response);
-                var table = document.querySelector("table");
-                var template;
                 if (jsonData.success){
                     console.log('subejct:',response);
                     sessionStorage.setItem("subject_list",response);
-                    var ctr=0;
-                    jsonData.data.forEach(element => {
-                            ctr = ctr + 1;
-                            template = 
-                        `<tr>
-                            <td>${ctr}</td>
-                            <td>${element.id}</td>
-                            <td>${element.subject_name}</td>
-                            <td>${element.subject_description}</td>
-                            <td>
-                                <span  data-bs-toggle="modal" data-bs-target="#subjectModal" class="action-button" onClick="onClickEditSubject(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSubject(${element.id})">Delete</span> 
-                            </td>
-                        </tr>`;
-                        table.innerHTML += template;
-                    });
-                    
                 }else{
                     /* alert(jsonData.error_msg); */
                     template = 
@@ -254,6 +236,25 @@ function onLogout() {
                 alert('System error: Ajax not working properly');
             }  
         }); 
+    }
+    function onGenerateListSubject(data) {
+        var table = document.querySelector("table");
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+                ctr = ctr + 1;
+                template = 
+            `<tr>
+                <td>${ctr}</td>
+                <td>${element.id}</td>
+                <td>${element.subject_name}</td>
+                <td>${element.subject_description}</td>
+                <td>
+                    <span  data-bs-toggle="modal" data-bs-target="#subjectModal" class="action-button" onClick="onClickEditSubject(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSubject(${element.id})">Delete</span> 
+                </td>
+            </tr>`;
+            table.innerHTML += template;
+        });
     }
     function onClickAddSubjectModal() {
         document.getElementById("subject_submit_btn_update").style.display="none";
@@ -523,7 +524,6 @@ function onLogout() {
             }
         });
     }
-
 /* ADMIN */
  
 
@@ -619,6 +619,11 @@ function onLogout() {
         }
     }
 /* USER */
+
+
+
+
+
 
 
 
