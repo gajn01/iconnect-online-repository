@@ -625,7 +625,7 @@ function onLogout() {
         }
     }
     function onClickViewSubjectUser(data) {
-        location.href = '../pages/subject-details.html';
+        window.location.href = "../pages/subject-details.html?id=" + data;
     }
     function onClickAddModuleModal() {
         module_title_input.value = "";
@@ -634,7 +634,8 @@ function onLogout() {
         $("#module_file").val('');
     }
     function onAddModule() {
-
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject_id = urlParams.get('id');
         let user_account = sessionStorage.getItem("user_account");
         var user_json = JSON.parse(user_account);
 
@@ -645,8 +646,8 @@ function onLogout() {
 
         var form = $('#module_form')[0];
         var formData = new FormData(form);
-        console.log("teahcer data: ",user_json.data );
         formData.append( 'teacher_id', user_json.data.id );
+        formData.append( 'subject_id', subject_id);
         if(module_title == '' || grade_level == ''|| module_description == ''|| file == ''){  
             alert('All Fields are required!');
         }else{
