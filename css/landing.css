@@ -31,7 +31,7 @@ body{
     text-decoration: none;
     color: white;
 }
-nav a{
+nav a, nav li{
     font-size: 1.5rem;
     text-decoration: none;
     color: #000000;
@@ -49,9 +49,15 @@ nav a{
     cursor: pointer;
     box-shadow: 5px 5px 10px #ccc;
 }
+.card p{
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 20rem;
+}
 .card:hover{
-    background: #019cde !important;
-
+    opacity: .8;
 }
 .card footer .modules-count{
     position: absolute;
@@ -149,14 +155,15 @@ table tbody{
     border: 1px solid #3264C6 !important;
     border-radius: 30px !important;
 }
-
+.require{
+    color: red !important;
+}
 .primary{
     background-color: #015c9f !important;
 }
 .secondary{
     background-color: #019cde !important;
 }
-
 .card.purple {
 background: linear-gradient(150deg, #f731db, #4600f1 100%) !important;
 }

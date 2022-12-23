@@ -12,6 +12,7 @@ include("connection.php");
         $password = md5($password);
         
         $sql=("SELECT 
+        tbl_account_profile.id,
         tbl_account_profile.firstname,
         tbl_account_profile.lastname, 
         tbl_account_profile.gender, 

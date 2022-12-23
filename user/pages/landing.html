@@ -26,13 +26,13 @@
                     let newCard = document.createElement('div');
                     newCard.classList.add(color_array[ctr]);
                     newCard.classList.add('card');
-                    /* newCard.onclick = function(){ onClickViewSubjectUser(2); }; */
+                    subject_description = element.subject_description;
                     newCard.setAttribute("onclick","onClickViewSubjectUser( "+ element.id +")");
-                    if(element.subject_description.length > 100){
+                   /*  if(element.subject_description.length > 100){
                         subject_description = element.subject_description.substring(0,100)+ '...';
                     }else{
                         subject_description = element.subject_description;
-                    }
+                    } */
                     let card_template = `
                         <h3>${element.subject_name}</h3>
                         <p>${subject_description}</p>

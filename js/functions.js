@@ -22,6 +22,13 @@ const school_input = document.getElementById("school");
 const status_input = document.getElementById("status");
 const request_id_input = document.getElementById("request_id");
 
+/* Module fields */
+const module_title_input = document.getElementById("module_title");
+const grade_level_input = document.getElementById("grade_level");
+const module_description_input = document.getElementById("module_description");
+
+
+
 function onLogin() {
     var username = $('#username').val();  
     var password = $('#password').val();  
@@ -620,6 +627,51 @@ function onLogout() {
     function onClickViewSubjectUser(data) {
         location.href = '../pages/subject-details.html';
     }
+    function onClickAddModuleModal() {
+        module_title_input.value = "";
+        module_description_input.value = "";
+        grade_level_input.selectedIndex =null;
+        $("#module_file").val('');
+    }
+    function onAddModule() {
+
+        let user_account = sessionStorage.getItem("user_account");
+        var user_json = JSON.parse(user_account);
+
+        var module_title = $('#module_title').val();
+        var grade_level = $('#grade_level').val();
+        var module_description = $('#module_description').val();
+        var file = $('#module_file').val();
+
+        var form = $('#module_form')[0];
+        var formData = new FormData(form);
+        console.log("teahcer data: ",user_json.data );
+        formData.append( 'teacher_id', user_json.data.id );
+        if(module_title == '' || grade_level == ''|| module_description == ''|| file == ''){  
+            alert('All Fields are required!');
+        }else{
+            $.ajax({  
+                url:"../../php/onaddmodule.php",  
+                method:"POST",  
+                contentType: false,
+                cache: false,
+                processData:false,
+                data: formData,  
+                success: function(response) {
+                    console.log('resL:',response);
+                    var jsonData = JSON.parse(response);
+                    if (jsonData.success){
+                        alert(jsonData.success_msg);
+                    }else{
+                        alert(jsonData.error_msg);
+                    }
+                    },
+                    error: function() {
+                        alert('System error: Ajax not working properly');
+                    }  
+            }); 
+        }
+    } 
 /* USER */
 
 
