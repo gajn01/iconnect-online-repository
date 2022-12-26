@@ -800,13 +800,18 @@ function onLogout() {
     function onUpdateModule() {
         var module_title = $('#module_title').val();
         var module_description = $('#module_description').val();
+        var form = $('#module_form')[0];
+        var formData = new FormData(form);
         if(module_title == '' || module_description == ''){  
             alert('All Fields are required!');
         }else{
             $.ajax({  
                 url:"../../php/onupdatemodule.php",  
                 method:"POST",  
-                data: $('#module_form').serialize(),  
+                contentType: false,
+                cache: false,
+                processData:false,
+                data: formData,  
                 success: function(response) {
                     console.log('res:',response);
                     var jsonData = JSON.parse(response);
