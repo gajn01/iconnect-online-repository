@@ -656,10 +656,9 @@ function onLogout() {
     function onClickViewSubjectUser(subject_id) {
         var jsonData = JSON.parse(subject_id);
         sessionStorage.removeItem("module_list");
-        window.location.href = "../pages/subject-details.php?id=" + subject_id ;
+        window.location.href = "../pages/subject-details.html?id=" + subject_id ;
     }
     function onGenerateListModule(data) {
-        console.log('request:',data);
         var table = document.querySelector("table");
         var template;
         var ctr=0;
@@ -672,7 +671,7 @@ function onLogout() {
                     <td>${element.module_description}</td>
                     <td>${element.grade_level}</td>
                     <td>
-                        <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button">Download</span> |
+                        <span  data-bs-toggle="modal" data-bs-target="#downloadModal" onClick="onViewDownloadableList(${element.id})" class="action-button">Files</span> |
                         <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button">Edit</span> | 
                         <span class="action-button">Delete</span> 
                     </td>
@@ -727,7 +726,64 @@ function onLogout() {
             }); 
         }
     } 
-
+    function onViewDownloadableList(module_id) {
+        $.ajax({  
+            url:"../../php/onviewfile.php",  
+            method:"POST",  
+            data: {module_id: module_id},  
+            success: function(response) {
+                console.log("check data: ",response);
+                sessionStorage.removeItem("file_list");
+                var jsonData = JSON.parse(response);
+                var ul = document.getElementById("module_list");
+                if (jsonData.success){
+                    sessionStorage.setItem("file_list",response);
+                    onGenerateListFile(jsonData.data);
+                }else{
+                    ul.innerHTML = "";
+                    document.getElementById("no_record").innerText ="No records!";
+                    /* alert(jsonData.error_msg); */
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+    }
+    function onGenerateListFile(data){
+        document.getElementById("no_record").innerText ="";
+        var ul = document.getElementById("module_list");
+        ul.innerHTML = "";
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            template = 
+                `<li><a href="#" onClick="onDownloadFile(${element.file_path})" >  ${element.file_path} </a></li>`;
+            ul.innerHTML += template;
+        });
+    }
+   
+    function onDownloadFile(file_name) {
+        const url ="";
+        $.ajax({
+            url: 'https://res.cloudinary.com/dbvn7dvvs/image/upload/v1671782145/cld-sample-5.jpg',
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function (data) {
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = file_name;
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        });
+    }
    
 /* USER */
 
