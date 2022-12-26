@@ -23,6 +23,7 @@ const status_input = document.getElementById("status");
 const request_id_input = document.getElementById("request_id");
 
 /* Module fields */
+const module_id_input = document.getElementById("module_id");
 const module_title_input = document.getElementById("module_title");
 const grade_level_input = document.getElementById("grade_level");
 const module_description_input = document.getElementById("module_description");
@@ -656,6 +657,54 @@ function onLogout() {
         sessionStorage.removeItem("module_list");
         window.location.href = "../pages/subject-details.html?id=" + subject_id ;
     }
+    function onClickAddModuleModal() {
+        var table = document.getElementById("file_table");
+        table.innerHTML = "";
+        document.getElementById("module_submit_btn_update").style.display="none";
+        document.getElementById("module_submit_btn_add").style.display="block";
+        module_title_input.value = "";
+        module_description_input.value = "";
+        grade_level_input.selectedIndex = null;
+        $("#module_file").val('');
+    }
+    function onClickEditModule(id) {
+        document.getElementById("module_submit_btn_update").style.display="block";
+        document.getElementById("module_submit_btn_add").style.display="none";
+        onViewDownloadableList(id);
+        let module_list = sessionStorage.getItem("module_list");
+        var jsonData = JSON.parse(module_list);
+        jsonData.data.forEach(element => {
+            if(element.id == id){
+                module_id_input.value = element.id;
+                module_title_input.value = element.module_title;
+                module_description_input.value = element.module_description;
+                grade_level_input.value = element.grade_level
+            }
+        });
+    }
+    function onViewDownloadableList(module_id) {
+        $.ajax({  
+            url:"../../php/onviewfile.php",  
+            method:"POST",  
+            data: {module_id: module_id},  
+            success: function(response) {
+                var table = document.getElementById("file_table");
+                table.innerHTML = "";
+                sessionStorage.removeItem("file_list");
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+                    sessionStorage.setItem("file_list",response);
+                    onGenerateListFile(jsonData.data);
+                }else{
+                    document.getElementById("no_record").innerText ="No records!";
+                    /* alert(jsonData.error_msg); */
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+    }
     function onGenerateListModule(data) {
         var table = document.getElementById("module_list");
         var template;
@@ -671,20 +720,41 @@ function onLogout() {
                     <td>
                         <span  data-bs-toggle="modal" data-bs-target="#downloadModal" onClick="onViewDownloadableList(${element.id})" class="action-button">Files</span> |
                         <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button" onClick="onClickEditModule(${element.id})">Edit</span> | 
-                        <span class="action-button">Delete</span> 
+                        <span class="action-button" onClick="onDeleteModule(${element.id})" >Delete</span> 
                     </td>
                 </tr>`;
             table.innerHTML += template;
         });
     }
-    function onClickAddModuleModal() {
-        document.getElementById("module_submit_btn_update").style.display="none";
-        document.getElementById("module_submit_btn_add").style.display="block";
-        module_title_input.value = "";
-        module_description_input.value = "";
-        grade_level_input.selectedIndex = null;
-       
-        $("#module_file").val('');
+    function onGenerateListFile(data){
+        document.getElementById("no_record").innerText ="";
+        var ul = document.getElementById("module_file_list");
+        ul.innerHTML = "";
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            template = 
+                `<li><a href="http://iconnect.unaux.com/uploads/${element.file_path}" download >  ${element.file_path} </a> </li>`;
+            ul.innerHTML += template;
+        });
+        document.getElementById("no_record").innerText ="";
+        var table = document.getElementById("file_table");
+        table.innerHTML = "";
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            template = 
+                `<tr>
+                    <td>${ctr}</td>
+                    <td>${element.file_path}</td>
+                    <td>
+                        <span class="action-button" onClick="onDeleteModule_file(${element.id})">Delete</span> 
+                    </td>
+                </tr>`;
+            table.innerHTML += template;
+        });
     }
     function onAddModule() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -727,74 +797,80 @@ function onLogout() {
             }); 
         }
     } 
-    function onViewDownloadableList(module_id) {
-        $.ajax({  
-            url:"../../php/onviewfile.php",  
-            method:"POST",  
-            data: {module_id: module_id},  
-            success: function(response) {
-                var table = document.getElementById("file_table");
-                table.innerHTML = "";
-                sessionStorage.removeItem("file_list");
-                var jsonData = JSON.parse(response);
-                if (jsonData.success){
-                    sessionStorage.setItem("file_list",response);
-                    onGenerateListFile(jsonData.data);
-                }else{
-                    document.getElementById("no_record").innerText ="No records!";
-                    /* alert(jsonData.error_msg); */
-                }
-            },
-            error: function() {
-                alert('System error: Ajax not working properly');
-            }  
-        }); 
+    function onUpdateModule() {
+        var module_title = $('#module_title').val();
+        var module_description = $('#module_description').val();
+        if(module_title == '' || module_description == ''){  
+            alert('All Fields are required!');
+        }else{
+            $.ajax({  
+                url:"../../php/onupdatemodule.php",  
+                method:"POST",  
+                data: $('#module_form').serialize(),  
+                success: function(response) {
+                    console.log('res:',response);
+                    var jsonData = JSON.parse(response);
+                    if (jsonData.success){
+                        alert(jsonData.success_msg);
+                        location.reload();
+                    }else{
+                        alert(jsonData.error_msg);
+                    }
+                    },
+                    error: function() {
+                    alert('System error: Ajax not working properly');
+                    }  
+            }); 
+        }
     }
-    function onGenerateListFile(data){
-        document.getElementById("no_record").innerText ="";
-       /*  var ul = document.getElementById("module_file_list");
-        ul.innerHTML = "";
-        var template;
-        var ctr=0;
-        data.forEach(element => {
-            ctr = ctr + 1;
-            template = 
-                `<li><a href="http://iconnect.unaux.com/uploads/${element.file_path}" download >  ${element.file_path} </a></li>`;
-            ul.innerHTML += template;
-        }); */
-        document.getElementById("no_record").innerText ="";
-        var table = document.getElementById("file_table");
-        table.innerHTML = "";
-        var template;
-        var ctr=0;
-        data.forEach(element => {
-            ctr = ctr + 1;
-            template = 
-                `<tr>
-                    <td>${ctr}</td>
-                    <td>${element.file_path}</td>
-                    <td>
-                        <span  data-bs-toggle="modal" data-bs-target="#downloadModal" onClick="onViewDownloadableList(${element.id})" class="action-button">Download</span> |
-                        <span class="action-button">Delete</span> 
-                    </td>
-                </tr>`;
-            table.innerHTML += template;
-        });
+    function onDeleteModule(id) {
+        let text = "Do you want to delete the record?";
+        if (confirm(text)) {
+            $.ajax({  
+                url:"../../php/ondeletemodule.php",  
+                method:"POST",  
+                data: { module_id : id },  
+                success: function(response) {
+                    var jsonData = JSON.parse(response);
+                    if (jsonData.success){
+                        alert(jsonData.success_msg);
+                        location.reload();
+                    }else{
+                        alert(jsonData.error_msg);
+                    }
+                    },
+                    error: function() {
+                    alert('System error: Ajax not working properly');
+                    }  
+            }); 
+        }
     }
-    function onClickEditModule(id) {
-        document.getElementById("module_submit_btn_update").style.display="block";
-        document.getElementById("module_submit_btn_add").style.display="none";
-       /*  onViewDownloadableList(id); */
-        let module_list = sessionStorage.getItem("module_list");
-        var jsonData = JSON.parse(module_list);
-        jsonData.data.forEach(element => {
-            if(element.id == id){
-                module_title_input.value = element.module_title;
-                module_description_input.value = element.module_description;
-                grade_level_input.value = element.grade_level
-            }
-        });
+    function onDeleteModule_file(id) {
+        let text = "Do you want to delete the file?";
+        if (confirm(text)) {
+            $.ajax({  
+                url:"../../php/ondeletefile.php",  
+                method:"POST",  
+                data: { file_id : id },  
+                success: function(response) {
+                    var jsonData = JSON.parse(response);
+                    if (jsonData.success){
+                        alert(jsonData.success_msg);
+                        /* location.reload(); */
+                    }else{
+                        alert(jsonData.error_msg);
+                    }
+                    },
+                    error: function() {
+                    alert('System error: Ajax not working properly');
+                    }  
+            }); 
+        }
+
+      
     }
+  
+
 /* USER */
 
 

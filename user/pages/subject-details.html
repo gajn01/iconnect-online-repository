@@ -161,7 +161,7 @@
                         <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" >Cancel</button>
                           <button type="button" class="btn btn-primary " id="module_submit_btn_add" name="module_submit_btn" onClick="onAddModule()" >Submit</button>
-                          <button type="button" class="btn btn-primary " id="module_submit_btn_update" name="module_submit_btn"  >Update</button>
+                          <button type="button" class="btn btn-primary " id="module_submit_btn_update" name="module_submit_btn" onClick="onUpdateModule()"  >Update</button>
                         </div>
                       </div>
                     </div>
@@ -175,16 +175,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <div class="table-content table-responsive-md mt-5">
-                          <table class="table file_table" id="file_table">
-                            <thead>
-                                <th>#</th>
-                                <th>File Name</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody class="table-group-divider"></tbody>
-                          </table>
-                        </div>
+                        <p  class="text-start">Click the name of the file to download.</p>
+                        <ol id="module_file_list"></ol>
                         <p id="no_record" class="text-center"></p>
                       </div>
                     </div>
