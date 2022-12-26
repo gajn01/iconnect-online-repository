@@ -8,7 +8,7 @@ include("connection.php");
     $module_description=$_POST['module_description'];
 
     /* FIles input */
-    $targetDir = "http://iconnect.unaux.com/uploads/";
+    $targetDir = "../uploads/";
     $fileName = basename($_FILES["module_file"]["name"]);
     $targetFilePath = $_SERVER["DOCUMENT_ROOT"] . $fileName;
     $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);

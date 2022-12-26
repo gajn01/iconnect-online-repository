@@ -759,31 +759,10 @@ function onLogout() {
         data.forEach(element => {
             ctr = ctr + 1;
             template = 
-                `<li><a href="#" onClick="onDownloadFile(${element.file_path})" >  ${element.file_path} </a></li>`;
+                `<li><a href="http://iconnect.unaux.com/uploads/${element.file_path}" download >  ${element.file_path} </a></li>`;
             ul.innerHTML += template;
         });
     }
-    function onDownloadFile(file_name) {
-        const url ="";
-        $.ajax({
-            url: 'https://res.cloudinary.com/dbvn7dvvs/image/upload/v1671782145/cld-sample-5.jpg',
-            method: 'GET',
-            xhrFields: {
-                responseType: 'blob'
-            },
-            success: function (data) {
-                var a = document.createElement('a');
-                var url = window.URL.createObjectURL(data);
-                a.href = url;
-                a.download = file_name;
-                document.body.append(a);
-                a.click();
-                a.remove();
-                window.URL.revokeObjectURL(url);
-            }
-        });
-    }
-   
 /* USER */
 
 
