@@ -1,7 +1,6 @@
 <?php
     include("connection.php"); 
     $module_id = $_POST['module_id'];
-
     /* Fetch module based on subject and teacher ID */
     $sql=("SELECT * FROM tbl_module_file WHERE module_id = '$module_id'");
     $result = mysqli_query($db, $sql);

@@ -8,7 +8,7 @@ include("connection.php");
     $module_description=$_POST['module_description'];
 
     /* FIles input */
-    $targetDir = "D:/Work/Freelance/iconnect/uploads/";
+    $targetDir = "../uploads/";
     $fileName = basename($_FILES["module_file"]["name"]);
     $targetFilePath = $targetDir . $fileName;
     $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
