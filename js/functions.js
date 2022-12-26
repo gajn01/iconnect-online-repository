@@ -625,7 +625,6 @@ function onLogout() {
         }
     }
     function onViewModule(subject_id,teacher_id) {
-        console.log("id", subject_id,teacher_id );
         $.ajax({  
             url:"../../php/onviewmodule.php",  
             method:"POST",  
@@ -654,12 +653,11 @@ function onLogout() {
         }); 
     }
     function onClickViewSubjectUser(subject_id) {
-        var jsonData = JSON.parse(subject_id);
         sessionStorage.removeItem("module_list");
         window.location.href = "../pages/subject-details.html?id=" + subject_id ;
     }
     function onGenerateListModule(data) {
-        var table = document.querySelector("table");
+        var table = document.getElementById("module_list");
         var template;
         var ctr=0;
         data.forEach(element => {
@@ -672,7 +670,7 @@ function onLogout() {
                     <td>${element.grade_level}</td>
                     <td>
                         <span  data-bs-toggle="modal" data-bs-target="#downloadModal" onClick="onViewDownloadableList(${element.id})" class="action-button">Files</span> |
-                        <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button">Edit</span> | 
+                        <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button" onClick="onClickEditModule(${element.id})">Edit</span> | 
                         <span class="action-button">Delete</span> 
                     </td>
                 </tr>`;
@@ -680,9 +678,12 @@ function onLogout() {
         });
     }
     function onClickAddModuleModal() {
+        document.getElementById("module_submit_btn_update").style.display="none";
+        document.getElementById("module_submit_btn_add").style.display="block";
         module_title_input.value = "";
         module_description_input.value = "";
-        grade_level_input.selectedIndex =null;
+        grade_level_input.selectedIndex = null;
+       
         $("#module_file").val('');
     }
     function onAddModule() {
@@ -732,15 +733,14 @@ function onLogout() {
             method:"POST",  
             data: {module_id: module_id},  
             success: function(response) {
-                console.log("check data: ",response);
+                var table = document.getElementById("file_table");
+                table.innerHTML = "";
                 sessionStorage.removeItem("file_list");
                 var jsonData = JSON.parse(response);
-                var ul = document.getElementById("module_list");
                 if (jsonData.success){
                     sessionStorage.setItem("file_list",response);
                     onGenerateListFile(jsonData.data);
                 }else{
-                    ul.innerHTML = "";
                     document.getElementById("no_record").innerText ="No records!";
                     /* alert(jsonData.error_msg); */
                 }
@@ -752,7 +752,7 @@ function onLogout() {
     }
     function onGenerateListFile(data){
         document.getElementById("no_record").innerText ="";
-        var ul = document.getElementById("module_list");
+       /*  var ul = document.getElementById("module_file_list");
         ul.innerHTML = "";
         var template;
         var ctr=0;
@@ -761,6 +761,38 @@ function onLogout() {
             template = 
                 `<li><a href="http://iconnect.unaux.com/uploads/${element.file_path}" download >  ${element.file_path} </a></li>`;
             ul.innerHTML += template;
+        }); */
+        document.getElementById("no_record").innerText ="";
+        var table = document.getElementById("file_table");
+        table.innerHTML = "";
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            template = 
+                `<tr>
+                    <td>${ctr}</td>
+                    <td>${element.file_path}</td>
+                    <td>
+                        <span  data-bs-toggle="modal" data-bs-target="#downloadModal" onClick="onViewDownloadableList(${element.id})" class="action-button">Download</span> |
+                        <span class="action-button">Delete</span> 
+                    </td>
+                </tr>`;
+            table.innerHTML += template;
+        });
+    }
+    function onClickEditModule(id) {
+        document.getElementById("module_submit_btn_update").style.display="block";
+        document.getElementById("module_submit_btn_add").style.display="none";
+       /*  onViewDownloadableList(id); */
+        let module_list = sessionStorage.getItem("module_list");
+        var jsonData = JSON.parse(module_list);
+        jsonData.data.forEach(element => {
+            if(element.id == id){
+                module_title_input.value = element.module_title;
+                module_description_input.value = element.module_description;
+                grade_level_input.value = element.grade_level
+            }
         });
     }
 /* USER */
