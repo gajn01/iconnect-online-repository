@@ -763,7 +763,6 @@ function onLogout() {
             ul.innerHTML += template;
         });
     }
-   
     function onDownloadFile(file_name) {
         const url ="";
         $.ajax({
