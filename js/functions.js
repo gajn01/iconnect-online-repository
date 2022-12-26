@@ -624,8 +624,61 @@ function onLogout() {
             }); 
         }
     }
-    function onClickViewSubjectUser(data) {
-        window.location.href = "../pages/subject-details.html?id=" + data;
+    function onViewModule(subject_id,teacher_id) {
+        console.log("id", subject_id,teacher_id );
+        $.ajax({  
+            url:"../../php/onviewmodule.php",  
+            method:"POST",  
+            data: {subject_id: subject_id,
+                    teacher_id: teacher_id},  
+            success: function(response) {
+                sessionStorage.removeItem("module_list");
+                var jsonData = JSON.parse(response);
+                var table = document.querySelector("table");
+                var template;
+                if (jsonData.success){
+                    sessionStorage.setItem("module_list",response);
+                    onGenerateListModule(jsonData.data);
+                }else{
+                    /* alert(jsonData.error_msg); */
+                    template = 
+                        `<tr >
+                            <td colspan="9" >${jsonData.error_msg}</td>
+                        </tr>`;
+                    table.innerHTML += template;
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+    }
+    function onClickViewSubjectUser(subject_id) {
+        var jsonData = JSON.parse(subject_id);
+        sessionStorage.removeItem("module_list");
+        window.location.href = "../pages/subject-details.php?id=" + subject_id ;
+    }
+    function onGenerateListModule(data) {
+        console.log('request:',data);
+        var table = document.querySelector("table");
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            template = 
+                `<tr>
+                    <td>${ctr}</td>
+                    <td>${element.module_title}</td>
+                    <td>${element.module_description}</td>
+                    <td>${element.grade_level}</td>
+                    <td>
+                        <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button">Download</span> |
+                        <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button">Edit</span> | 
+                        <span class="action-button">Delete</span> 
+                    </td>
+                </tr>`;
+            table.innerHTML += template;
+        });
     }
     function onClickAddModuleModal() {
         module_title_input.value = "";
@@ -663,6 +716,7 @@ function onLogout() {
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
                         alert(jsonData.success_msg);
+                        location.reload();
                     }else{
                         alert(jsonData.error_msg);
                     }
@@ -673,6 +727,8 @@ function onLogout() {
             }); 
         }
     } 
+
+   
 /* USER */
 
 

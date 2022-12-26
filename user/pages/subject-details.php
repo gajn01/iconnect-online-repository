@@ -1,3 +1,8 @@
+<?php
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,19 +15,30 @@
     <title>Admin</title>
     <script>
       window.onload = function () {
+          const urlParams = new URLSearchParams(window.location.search);
+          const subject_id = urlParams.get('id');
           let user_account = sessionStorage.getItem("user_account");
+          let json_user = JSON.parse(user_account);
+
+          let subject_list = sessionStorage.getItem("subject_list");
+          let json_subject = JSON.parse(subject_list);
+          let subject_name;
+          json_subject.data.forEach(element => {
+            if (element.id == subject_id) {
+                document.getElementById('subject_name').innerText = element.subject_name;
+            }
+          });
+
+          onViewModule(subject_id,json_user.data.id);
           if(!user_account){
               location.href = '../index.html';
           }else{
-              var jsonData = JSON.parse(user_account);
-              document.getElementById('account_name_label').innerText =  jsonData.data.firstname + " " + jsonData.data.lastname;
+              document.getElementById('account_name_label').innerText =  json_user.data.firstname + " " + json_user.data.lastname;
           }
       }
     </script>
 </head>
 <body>
-
-
     <div class="wrapper">
         <nav id="topbar-nav">
           <div class="container topbar">
@@ -38,7 +54,7 @@
                 <nav aria-label="breadcrumb ">
                     <ol class="breadcrumb mt-5">
                       <li class="breadcrumb-item"><a href="landing.html">Subject</a></li>
-                      <li class="breadcrumb-item active" aria-current="page">Math</li>
+                      <li id="subject_name" class="breadcrumb-item active" aria-current="page">Subject Name</li>
                     </ol>
                   </nav>
 
@@ -56,26 +72,12 @@
                           <table class="table">
                             <thead>
                                 <th>#</th>
-                                <th>Uploaded By</th>
                                 <th>Module Name</th>
                                 <th>Module Description</th>
                                 <th>Grade Level </th>
                                 <th>Action</th>
                             </thead>
-                            <tbody class="table-group-divider">
-                              <tr>
-                                <td>1</td>
-                                <td >ACSD12345</td>
-                                <td>Module 1</td>
-                                <td>Lorem ipsum dolor sit.</td>
-                                <td>Grade 1</td>
-                                <td>
-                                <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button">Download</span> |
-                                  <span  data-bs-toggle="modal" data-bs-target="#moduleModal" class="action-button">Edit</span> | 
-                                  <span class="action-button">Delete</span> 
-                                </td>
-                              </tr>
-                            </tbody>
+                            <tbody class="table-group-divider"></tbody>
                           </table>
                         </div>
                         <div class="pagination-container mt-4">
