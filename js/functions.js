@@ -690,6 +690,8 @@ function onLogout() {
             success: function(response) {
                 var table = document.getElementById("file_table");
                 table.innerHTML = "";
+                var ul = document.getElementById("module_file_list");
+                ul.innerHTML = "";
                 sessionStorage.removeItem("file_list");
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
@@ -729,17 +731,16 @@ function onLogout() {
     function onGenerateListFile(data){
         document.getElementById("no_record").innerText ="";
         var ul = document.getElementById("module_file_list");
+        var table = document.getElementById("file_table");
+
         ul.innerHTML = "";
         var template;
-        var ctr=0;
         data.forEach(element => {
-            ctr = ctr + 1;
             template = 
                 `<li><a href="http://iconnect.unaux.com/uploads/${element.file_path}" download >  ${element.file_path} </a> </li>`;
             ul.innerHTML += template;
         });
-        document.getElementById("no_record").innerText ="";
-        var table = document.getElementById("file_table");
+
         table.innerHTML = "";
         var template;
         var ctr=0;
