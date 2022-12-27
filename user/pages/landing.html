@@ -16,38 +16,8 @@
             }else{
                 var jsonData = JSON.parse(user_account);
                 document.getElementById('account_name_label').innerText =  jsonData.data.firstname + " " + jsonData.data.lastname;
-                onViewSubject();
+                onViewSubject(0);
                 let subject_list = sessionStorage.getItem("subject_list");
-                var jsonData = JSON.parse(subject_list);
-                subject_container = document.querySelector('#thumbnail-container');
-                const color_array = ['primary','secondary','purple','green','primary'];
-                var ctr=0;
-                jsonData.data.forEach(element => {
-                    let newCard = document.createElement('div');
-                    newCard.classList.add(color_array[ctr]);
-                    newCard.classList.add('card');
-                    subject_description = element.subject_description;
-                    newCard.setAttribute("onclick","onClickViewSubjectUser( "+ element.id +")");
-                   /*  if(element.subject_description.length > 100){
-                        subject_description = element.subject_description.substring(0,100)+ '...';
-                    }else{
-                        subject_description = element.subject_description;
-                    } */
-                    let card_template = `
-                        <h3>${element.subject_name}</h3>
-                        <p>${subject_description}</p>
-
-                        <footer class="mt-4">
-                            <p class="modules-count">Modules: <span>20</span></p>
-                        </footer>
-                    `;
-
-                    subject_container.appendChild(newCard);
-    
-                // Inject the template html on DOM's new append item
-                newCard.innerHTML = card_template;
-                ctr = ctr + 1;
-                });
             }
         }
       </script>
@@ -57,10 +27,18 @@
     <div class="wrapper">
         <nav id="topbar-nav">
             <div class="container topbar">
-                <div class="logo-container">
+                <div>
                     <img src="../../assets/logo.png" width="60px" alt="">
                 </div>
-                <a href="" id="account_name_label" >user user </a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="account_dropdown " data-bs-toggle="dropdown" aria-expanded="false">
+                      <span id="account_name_label">user user </span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="account_dropdown">
+                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="#" onClick="onLogoutUser()">Logout</a></li>
+                    </ul>
+                  </div>
             </div>
         </nav>
         <div class="content">

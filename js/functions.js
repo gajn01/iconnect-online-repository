@@ -70,6 +70,10 @@ function onLogout() {
         location.href = '../index.php';
     }
 }
+function goToMainPage() {
+    location.href = '../pages/landing.html';
+    
+}
 /* ADMIN */
     function onGenerateDropListSchool(data) {
         data.forEach(element => {
@@ -220,7 +224,7 @@ function onLogout() {
         }); 
     }
     /* Subject  Function */
-    function onViewSubject() {
+    function onViewSubject(isAdmin) {
         $.ajax({  
             url:"../../php/onviewsubject.php",  
             method:"GET",  
@@ -230,6 +234,28 @@ function onLogout() {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
                     sessionStorage.setItem("subject_list",response);
+                    if(isAdmin == 0){
+                        subject_container = document.querySelector('#thumbnail-container');
+                        const color_array = ['primary','secondary','purple','green','primary'];
+                        var ctr=0;
+                        jsonData.data.forEach(element => {
+                            let newCard = document.createElement('div');
+                            newCard.classList.add(color_array[ctr]);
+                            newCard.classList.add('card');
+                            subject_description = element.subject_description;
+                            newCard.setAttribute("onclick","onClickViewSubjectUser( "+ element.id +")");
+                            let card_template = `
+                                <h3>${element.subject_name}</h3>
+                                <p>${subject_description}</p>`;
+                           /*  <footer class="mt-4">
+                            <p class="modules-count">Modules: <span>20</span></p>
+                        </footer> */
+                            subject_container.appendChild(newCard);
+                        // Inject the template html on DOM's new append item
+                        newCard.innerHTML = card_template;
+                        ctr = ctr + 1;
+                        });
+                    }
                 }else{
                     /* alert(jsonData.error_msg); */
                     template = 
@@ -623,6 +649,15 @@ function onLogout() {
                     alert('System error: Ajax not working properly');
                 }  
             }); 
+        }
+    }
+    function onLogoutUser() {
+        let text = "Are you sure you want to logout?";
+        if (confirm(text)) {
+            location.href = '../index.html';
+            sessionStorage.clear();
+            localStorage.clear();
+
         }
     }
     function onViewModule(subject_id,teacher_id) {

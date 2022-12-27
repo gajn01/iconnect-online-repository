@@ -37,9 +37,17 @@
         <nav id="topbar-nav">
           <div class="container topbar">
             <div class="logo-container">
-                <img src="../../assets/logo.png" width="60px" alt="">
+                <img src="../../assets/logo.png" width="60px" alt="" onClick="goToMainPage()">
             </div>
-            <a href="" id="account_name_label" >user user </a>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="account_dropdown " data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="account_name_label">user user </span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="account_dropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#" onClick="onLogoutUser()">Logout</a></li>
+              </ul>
+            </div>
         </div>
         </nav>
         <div class="content">
@@ -63,7 +71,7 @@
                         <table class="table" id="module_list">
                           <thead>
                               <th>#</th>
-                              <th>Module Name</th>
+                              <th>Module Tittle</th>
                               <th>Module Description</th>
                               <th>Grade Level </th>
                               <th>Action</th>

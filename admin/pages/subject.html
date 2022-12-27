@@ -10,7 +10,7 @@
     <title>Admin</title>
     <script>
       window.onload = function () {
-          onViewSubject();
+          onViewSubject(1);
           let subject_list = sessionStorage.getItem("subject_list");
           var jsonData = JSON.parse(subject_list);
           console.log('check data: ',jsonData );
