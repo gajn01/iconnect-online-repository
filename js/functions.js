@@ -21,6 +21,9 @@ const rank_input = document.getElementById("rank");
 const school_input = document.getElementById("school");
 const status_input = document.getElementById("status");
 const request_id_input = document.getElementById("request_id");
+const username_input = document.getElementById("username");
+const account_id_input = document.getElementById("account_id");
+
 
 /* Module fields */
 const module_id_input = document.getElementById("module_id");
@@ -916,14 +919,14 @@ function goToSubject(subject_id) {
 
       
     }
-    function onViewOtherModule(subject_id,school_id) {
+    function onViewOtherModule(subject_id,school_id,teacher_id) {
         $.ajax({  
             url:"../../php/onviewothermodule.php",  
             method:"POST",  
             data: {subject_id: subject_id,
-                    school_id: school_id},  
+                    school_id: school_id,
+                    teacher_id:teacher_id},  
             success: function(response) {
-                console.log("res: ",response);
                 sessionStorage.removeItem("other_module_list");
                 var jsonData = JSON.parse(response);
                 var table = document.querySelector("table");
@@ -932,7 +935,6 @@ function goToSubject(subject_id) {
                     sessionStorage.setItem("other_module_list",response);
                     onGenerateListOtherModule(jsonData.data);
                 }else{
-                    /* alert(jsonData.error_msg); */
                     template = 
                         `<tr >
                             <td colspan="9" >${jsonData.error_msg}</td>
@@ -965,9 +967,45 @@ function goToSubject(subject_id) {
             table.innerHTML += template;
         });
     }
+    function onPopulateUserProfile() {
+        let user_account = sessionStorage.getItem("user_account");
+        let json_user = JSON.parse(user_account);
+        console.log('cehck', json_user);
 
-  
-
+        lastname_input.value = json_user.data.lastname;
+        firstname_input.value = json_user.data.firstname;
+        gender_input.value  = json_user.data.gender;
+        age_input.value  = json_user.data.age;
+        birthdate_input.value  = json_user.data.birthdate;
+        mobile_number_input.value  = json_user.data.mobile_number;
+        email_input.value  = json_user.data.email;
+        address_input.value  = json_user.data.address;
+        rank_input.value  = json_user.data.rank;
+        school_input.value  = json_user.data.school_id;
+        username_input.value  = json_user.data.username;
+        account_id_input.value  = json_user.data.id;
+    }
+    function onUpdateProfile() {
+        $.ajax({  
+            url:"../../php/onupdateprofile.php",  
+            method:"POST",  
+            data: $('#update_profile_form').serialize(),  
+            success: function(response) {
+                console.log('res:',$('#update_profile_form').serialize());
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+                    sessionStorage.setItem("user_account",response);
+                    alert(jsonData.success_msg);
+                    location.reload();
+                }else{
+                    alert(jsonData.error_msg);
+                }
+                },
+                error: function() {
+                alert('System error: Ajax not working properly');
+                }  
+        }); 
+    }
 /* USER */
 
 

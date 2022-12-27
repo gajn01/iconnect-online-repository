@@ -21,6 +21,7 @@ include("connection.php");
         tbl_account_profile.email, 
         tbl_account_profile.mobile_number, 
         tbl_account_profile.rank,
+        tbl_account_profile.address,
         tbl_account_profile.school_id,
         tbl_account_profile.status, 
         tbl_account.username FROM tbl_account_profile RIGHT JOIN tbl_account ON 
