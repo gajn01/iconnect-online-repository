@@ -71,13 +71,16 @@ nav a, nav li{
     padding: 0 !important;
     display: flex;
     gap: .4rem;
-    justify-content: end;
+    justify-content:space-between;
 
 }
 .btn-add{
     background-color: #3264C6 !important;
     border: none;
     color: #e0e8f8;
+}
+.btn-add:hover{
+    opacity: .8 !important;
 }
 .searchbar{
     border-radius: 10px;

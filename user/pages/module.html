@@ -13,18 +13,19 @@
           const urlParams = new URLSearchParams(window.location.search);
           const subject_id = urlParams.get('id');
           let user_account = sessionStorage.getItem("user_account");
-          let json_user = JSON.parse(user_account);
           let subject_list = sessionStorage.getItem("subject_list");
+
+          let json_user = JSON.parse(user_account);
           let json_subject = JSON.parse(subject_list);
           let subject_name;
-          let go_to_module = document.getElementById("go_to_module");
-          go_to_module.setAttribute("onclick","goToOtherModule( "+ subject_id +")");
           json_subject.data.forEach(element => {
             if (element.id == subject_id) {
                 document.getElementById('subject_name').innerText = element.subject_name;
+                document.getElementById("subject_name").setAttribute("onclick","goToSubject( "+ subject_id +")");
             }
           });
-          onViewModule(subject_id,json_user.data.id);
+          console.log('school id: ',json_user.data.school_id);
+          onViewOtherModule(subject_id,json_user.data.school_id);
           if(!user_account){
               location.href = '../index.html';
           }else{
@@ -56,19 +57,19 @@
               <nav aria-label="breadcrumb ">
                 <ol class="breadcrumb mt-5">
                   <li class="breadcrumb-item"><a href="landing.html">Subject</a></li>
-                  <li id="subject_name" class="breadcrumb-item active" aria-current="page">Subject Name</li>
+                  <li  class="breadcrumb-item" aria-current="page"><a href="# " id="subject_name">Subject Name</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Other Module</li>
+
                 </ol>
               </nav>
                   <!-- Table section -->
               <section >
                   <div class="header-button mt-5">
                     <div>
-                      <button type="button" class="btn btn-primary btn-add" id="go_to_module">See Other Modules</button>
                     </div>
                     <div>
                       <input class="searchbar" type="text" name="searchbar" id="searchbar" placeholder="Search here...">
                       <!-- <button type="button" class="btn btn-primary btn-add">Filter</button> -->
-                      <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#moduleModal" onClick="onClickAddModuleModal()">Add Module</button>
                     </div>
                   </div>
                   <div class="row">
@@ -77,6 +78,7 @@
                         <table class="table" id="module_list">
                           <thead>
                               <th>#</th>
+                              <th>Uploaded By</th>
                               <th>Module Tittle</th>
                               <th>Module Description</th>
                               <th>Grade Level </th>

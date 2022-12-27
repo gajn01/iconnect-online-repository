@@ -3,6 +3,7 @@ include("connection.php");
 
     $teacher_id = $_POST['teacher_id'];
     $subject_id = $_POST['subject_id'];
+    $school_id = $_POST['school_id'];
     $module_title=$_POST['module_title'];
     $grade_level=$_POST['grade_level'];
     $module_description=$_POST['module_description'];
@@ -14,8 +15,8 @@ include("connection.php");
     $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
  
     $form_data = array();
-    $sql=("INSERT INTO tbl_module (teacher_id,subject_id,module_title,module_description,grade_level) 
-    VALUES ('$teacher_id','$subject_id','$module_title','$module_description','$grade_level')");
+    $sql=("INSERT INTO tbl_module (teacher_id,subject_id,school_id,module_title,module_description,grade_level) 
+    VALUES ('$teacher_id','$subject_id','$school_id','$module_title','$module_description','$grade_level')");
     if (mysqli_query($db, $sql)) {
         $last_id = $db->insert_id;
         $sql_file_upload = "INSERT into tbl_module_file (module_id,file_path) VALUES ('$last_id','$fileName')";

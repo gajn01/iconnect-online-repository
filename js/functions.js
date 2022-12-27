@@ -72,7 +72,12 @@ function onLogout() {
 }
 function goToMainPage() {
     location.href = '../pages/landing.html';
-    
+}
+function goToOtherModule(subject_id) {
+    location.href = "../pages/module.html?id=" + subject_id ;
+}
+function goToSubject(subject_id) {
+    location.href = "../pages/subject-details.html?id=" + subject_id ;
 }
 /* ADMIN */
     function onGenerateDropListSchool(data) {
@@ -806,6 +811,7 @@ function goToMainPage() {
         var form = $('#module_form')[0];
         var formData = new FormData(form);
         formData.append( 'teacher_id', user_json.data.id );
+        formData.append( 'school_id', user_json.data.school_id );
         formData.append( 'subject_id', subject_id);
         if(module_title == '' || grade_level == ''|| module_description == ''|| file == ''){  
             alert('All Fields are required!');
@@ -910,6 +916,56 @@ function goToMainPage() {
 
       
     }
+    function onViewOtherModule(subject_id,school_id) {
+        $.ajax({  
+            url:"../../php/onviewothermodule.php",  
+            method:"POST",  
+            data: {subject_id: subject_id,
+                    school_id: school_id},  
+            success: function(response) {
+                console.log("res: ",response);
+                sessionStorage.removeItem("other_module_list");
+                var jsonData = JSON.parse(response);
+                var table = document.querySelector("table");
+                var template;
+                if (jsonData.success){
+                    sessionStorage.setItem("other_module_list",response);
+                    onGenerateListOtherModule(jsonData.data);
+                }else{
+                    /* alert(jsonData.error_msg); */
+                    template = 
+                        `<tr >
+                            <td colspan="9" >${jsonData.error_msg}</td>
+                        </tr>`;
+                    table.innerHTML += template;
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+    }
+    function onGenerateListOtherModule(data) {
+        var table = document.getElementById("module_list");
+        var template;
+        var ctr=0;
+        data.forEach(element => {
+            ctr = ctr + 1;
+            template = 
+                `<tr>
+                    <td>${ctr}</td>
+                    <td>${element.firstname} ${element.lastname} </td>
+                    <td>${element.module_title}</td>
+                    <td>${element.module_description}</td>
+                    <td>${element.grade_level}</td>
+                    <td>
+                        <span  data-bs-toggle="modal" data-bs-target="#downloadModal" onClick="onViewDownloadableList(${element.id})" class="action-button">Files</span>
+                    </td>
+                </tr>`;
+            table.innerHTML += template;
+        });
+    }
+
   
 
 /* USER */
