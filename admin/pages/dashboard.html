@@ -18,6 +18,7 @@
             if(jsonData){
                 pieChart();
                 genderChart();
+                dashboardContent();
             }else{
             location.href = '../index.php';
             }
@@ -80,7 +81,7 @@
                                           <img src="../assets/materials.svg" alt="">
                                       </div> -->
                                       <div class="info">
-                                          <span>20</span>
+                                          <span id="pending_label">0</span>
                                           <p>Pending</p>
                                       </div>
                                   </div>
@@ -91,7 +92,7 @@
                                         <!-- <img src="../assets/user.svg" alt=""> -->
                                     </div>
                                     <div class="info">
-                                        <span>712</span>
+                                        <span id="active_label">0</span>
                                         <p>Active User</p>
                                     </div>
                                 </div>
@@ -102,7 +103,7 @@
                                         <!-- <img src="../assets/reports.svg" alt=""> -->
                                     </div>
                                     <div class="info">
-                                        <span>6</span>
+                                        <span id="module_label">0</span>
                                         <p>Module</p>
                                     </div>
                                 </div>

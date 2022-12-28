@@ -642,6 +642,46 @@ function goToSubject(subject_id) {
         }); 
        
     }
+    function dashboardContent() {
+        $.ajax({  
+            url:"../../php/onviewallstatus.php",  
+            method:"POST",  
+            data: '',  
+            success: function(response) {
+                console.log('res:',response);
+                var jsonData = JSON.parse(response);
+                console.log('json:',jsonData);
+                if (jsonData.success){
+                    document.getElementById("pending_label").innerText =jsonData.data[0].counter;
+                    document.getElementById("active_label").innerText =jsonData.data[1].counter;
+                }else{
+                    alert(jsonData.error_msg);
+                }
+                },
+                error: function() {
+                    alert('System error: Ajax not working properly');
+                }  
+        }); 
+
+        $.ajax({  
+            url:"../../php/dashboardmodule.php",  
+            method:"POST",  
+            data: '',  
+            success: function(response) {
+                console.log('res:',response);
+                var jsonData = JSON.parse(response);
+                console.log('json:',jsonData);
+                if (jsonData.success){
+                    document.getElementById("module_label").innerText = jsonData.data[0].counter;
+                }else{
+                    alert(jsonData.error_msg);
+                }
+                },
+                error: function() {
+                    alert('System error: Ajax not working properly');
+                }  
+        }); 
+    }
 /* ADMIN */
  
 
