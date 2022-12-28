@@ -119,26 +119,30 @@
                             </div>
                         </form>
                         <h5 class="mt-2">Account</h5>
-                        <form id="signup_form" class="text-start">
+                        <form id="password_form" class="text-start">
                             <div class="row ">
-                                <div class="col-md-12 col-sm-12">
+                                <div class="col-md-6 col-sm-12">
                                     <label for="username" class="col-sm-12 col-md-12 col-form-label">Username </label>
                                     <input class="form-control mb-3"   type="text"  id="username" name="username" disabled >
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <label for="old_password" class="col-sm-12 col-md-12 col-form-label">Old Password </label>
+                                    <input class="form-control mb-3"   type="password"  id="old_password" name="old_password"  >
                                 </div>
                             </div>
                             <div class="row ">
                                 <div class="col-md-6 col-sm-12">
-                                    <label for="password" class="col-sm-12 col-md-12 col-form-label">Password</label>
-                                    <input class="form-control mb-3"   type="text"  id="password" name="password" >
+                                    <label for="new_password" class="col-sm-12 col-md-12 col-form-label">New Password</label>
+                                    <input class="form-control mb-3"   type="password"  id="new_password" name="new_password" >
                                 </div>
                                 <div class="col-md-6 col-sm-12">
                                     <label for="confirm_password" class="col-sm-12 col-md-12 col-form-label">Confirm Password</label>
-                                    <input class="form-control mb-3"   type="text"  id="confirm_password" name="confirm_password" >
+                                    <input class="form-control mb-3"   type="password"  id="confirm_password" name="confirm_password" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 text-end mt-3">
-                                    <button type="button" name="submit" id="submit" class="btn btn-add text-white float-right" onClick="onUpdateProfile()">Update Password</button>
+                                    <button type="button" name="submit" id="submit" class="btn btn-add text-white float-right" onClick="onUpdatePassword()">Update Password</button>
                                 </div>
                             </div>
                         </form>

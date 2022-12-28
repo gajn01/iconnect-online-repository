@@ -69,7 +69,7 @@ function goToLogin() {
 function onLogout() {
     let text = "Are you sure you want to logout?";
     if (confirm(text)) {
-        sessionStorage.removeItem("account");
+        sessionStorage.clear();
         location.href = '../index.php';
     }
 }
@@ -105,6 +105,7 @@ function goToSubject(subject_id) {
                 console.log(jsonData.data);
                 if (jsonData.success){
                     sessionStorage.setItem("school_list",response);
+                    onGenerateListSchool(jsonData.data);
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -172,9 +173,8 @@ function goToSubject(subject_id) {
                 success: function(response) {
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
-                        onViewSchool();
                         alert(jsonData.success_msg);
-                        location.href = '../pages/school.html';
+                        location.reload();
                     }else{
                         alert(jsonData.error_msg);
                     }
@@ -198,9 +198,8 @@ function goToSubject(subject_id) {
                 success: function(response) {
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
-                        onViewSchool();
                         alert(jsonData.success_msg);
-                        location.href = '../pages/school.html';
+                        location.reload();
                     }else{
                         alert(jsonData.error_msg);
                     }
@@ -219,9 +218,8 @@ function goToSubject(subject_id) {
             success: function(response) {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
-                    onViewSchool();
                     alert(jsonData.success_msg);
-                    location.href = '../pages/school.html';
+                    location.reload();
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -244,7 +242,7 @@ function goToSubject(subject_id) {
                     sessionStorage.setItem("subject_list",response);
                     if(isAdmin == 0){
                         subject_container = document.querySelector('#thumbnail-container');
-                        const color_array = ['primary','secondary','purple','green','primary'];
+                        const color_array = ['primary','secondary','purple','green','primary','purple'];
                         var ctr=0;
                         jsonData.data.forEach(element => {
                             let newCard = document.createElement('div');
@@ -263,9 +261,10 @@ function goToSubject(subject_id) {
                         newCard.innerHTML = card_template;
                         ctr = ctr + 1;
                         });
+                    }else{
+                        onGenerateListSubject(jsonData.data);
                     }
                 }else{
-                    /* alert(jsonData.error_msg); */
                     template = 
                         `<tr >
                             <td colspan="5" >${jsonData.error_msg}</td>
@@ -287,11 +286,10 @@ function goToSubject(subject_id) {
                 template = 
             `<tr>
                 <td>${ctr}</td>
-                <td>${element.id}</td>
                 <td>${element.subject_name}</td>
-                <td>${element.subject_description}</td>
+                <td class="w-50">${element.subject_description}</td>
                 <td>
-                    <span  data-bs-toggle="modal" data-bs-target="#subjectModal" class="action-button" onClick="onClickEditSubject(${element.id})" >Edit</span> | <span class="action-button" onClick="onClickDeleteSubject(${element.id})">Delete</span> 
+                    <span  data-bs-toggle="modal" data-bs-target="#subjectModal" class="action-button" onClick="onClickEditSubject(${element.id})" >Update</span> | <span class="action-button" onClick="onClickDeleteSubject(${element.id})">Delete</span> 
                 </td>
             </tr>`;
             table.innerHTML += template;
@@ -333,12 +331,10 @@ function goToSubject(subject_id) {
                 method:"POST",  
                 data: $('#subject_form').serialize(),  
                 success: function(response) {
-                    console.log('resL:',response);
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
                         alert(jsonData.success_msg);
-                        location.href = '../pages/subject.html';
-                        onViewSubject();
+                        location.reload();
                     }else{
                         alert(jsonData.error_msg);
                     }
@@ -360,12 +356,10 @@ function goToSubject(subject_id) {
                 method:"POST",  
                 data: $('#subject_form').serialize(),  
                 success: function(response) {
-                    console.log('res:',response);
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
                         alert(jsonData.success_msg);
-                        location.href = '../pages/subject.html';
-                        onViewSchool();
+                        location.reload();
                     }else{
                         alert(jsonData.error_msg);
                     }
@@ -385,8 +379,7 @@ function goToSubject(subject_id) {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
                     alert(jsonData.success_msg);
-                    location.href = '../pages/subject.html';
-                    onViewSchool();
+                    location.reload();
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -408,8 +401,8 @@ function goToSubject(subject_id) {
                 var table = document.querySelector("table");
                 var template;
                 if (jsonData.success){
-                    console.log('request:',response);
                     sessionStorage.setItem("request_list",response);
+                    onGenerateListRequest(jsonData.data);
                 }else{
                     /* alert(jsonData.error_msg); */
                     template = 
@@ -447,7 +440,7 @@ function goToSubject(subject_id) {
                     <td>${element.rank}</td>
                     <td>${status}</td>
                     <td>
-                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditRequest(${element.id})" >Edit</span>  
+                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickEditRequest(${element.id})" >View</span>  
                     </td>
                 </tr>`;
             table.innerHTML += template;
@@ -483,9 +476,8 @@ function goToSubject(subject_id) {
                 console.log('res:',response);
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
-                    onViewRequest();
                     alert(jsonData.success_msg);
-                    location.href = '../pages/request.html';
+                    location.reload();
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -508,8 +500,8 @@ function goToSubject(subject_id) {
                 var template;
                 if (jsonData.success){
                     sessionStorage.setItem("teacher_list",response);
+                    onGenerateListTeacher(jsonData.data);
                 }else{
-                    /* alert(jsonData.error_msg); */
                     template = 
                         `<tr >
                             <td colspan="9" >${jsonData.error_msg}</td>
@@ -538,7 +530,7 @@ function goToSubject(subject_id) {
                     <td>${element.school_name}</td>
                     <td>${element.rank}</td>
                     <td>
-                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickViewTeacher(${element.id})" >Edit</span>  
+                        <span  data-bs-toggle="modal" data-bs-target="#viewTeacherModal" class="action-button" onClick="onClickViewTeacher(${element.id})" >View</span>  
                     </td>
                 </tr>`;
             table.innerHTML += template;
@@ -608,27 +600,6 @@ function goToSubject(subject_id) {
                         alert('System error: Ajax not working properly');
                         }  
                 }); 
-
-                /* Check if Username is existing */
-/* 
-                $.ajax({  
-                    url:"../../php/onsignup.php",  
-                    method:"POST",  
-                    data: $('#signup_form').serialize(),  
-                    success: function(response) {
-                        var jsonData = JSON.parse(response);
-                        if (jsonData.success){
-                            alert(jsonData.success_msg);
-                            location.href = '../pages/school.html';
-                            onViewSchool();
-                        }else{
-                            alert(jsonData.error_msg);
-                        }
-                        },
-                        error: function() {
-                        alert('System error: Ajax not working properly');
-                        }  
-                });  */
             }
         }
     }  
@@ -1000,11 +971,40 @@ function goToSubject(subject_id) {
                 }else{
                     alert(jsonData.error_msg);
                 }
-                },
-                error: function() {
+            },
+            error: function() {
                 alert('System error: Ajax not working properly');
-                }  
+            }  
         }); 
+    }
+    function onUpdatePassword() {
+        var username = $('#username').val();
+        var old_password = $('#old_password').val();
+        var new_password = $('#new_password').val();
+        var confirm_password = $('#confirm_password').val();
+        if(new_password == confirm_password){
+            $.ajax({  
+                url:"../../php/onupdatepassword.php",  
+                method:"POST",  
+                data: { username:username,
+                        new_password:new_password,
+                        old_password:old_password},  
+                success: function(response) {
+                    console.log('res:',response);
+                    var jsonData = JSON.parse(response);
+                    if (jsonData.success){
+                        alert(jsonData.success_msg);
+                        /* location.reload(); */
+                    }else{
+                        alert(jsonData.error_msg);
+                    }
+                },error: function() {
+                    alert('System error: Ajax not working properly');
+                }  
+            }); 
+        }else{
+            alert('New password and confirm password is not match!');
+        }
     }
 /* USER */
 
