@@ -17,6 +17,7 @@
             var jsonData = JSON.parse(account_info);
             if(jsonData){
                 pieChart();
+                genderChart();
             }else{
             location.href = '../index.php';
             }
@@ -112,9 +113,16 @@
 
                 <section>
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6  col-lg-6">
-                                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                        <div class="chart-container">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12  col-lg-6">
+                                    <h3 >Number of modules per Subject</h3>
+                                    <div id="chartContainer" style="height: 320px; width: 100%;"></div>
+                                </div>
+                                <div class="col-sm-12 col-md-12  col-lg-6">
+                                    <h3 >Number of gender</h3>
+                                    <div id="genderChart" style="height: 320px; width: 100%;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

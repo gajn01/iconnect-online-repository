@@ -103,7 +103,7 @@ h1,h2{
 
 /* Thumbnail */
 .thumbnail{
-    margin-top: 8rem;
+    margin-top: 1rem;
 }
 .thumbnail .container .card{
     padding: 1.4rem;
@@ -296,6 +296,9 @@ table tbody{
 }
 .require{
     color: red;
+}
+.chart-container{
+    height: 600px !important;
 }
 
 /* ---------------------------------------------------

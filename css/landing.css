@@ -6,6 +6,7 @@
     /* transition: all 0.3s; */
     font: 20px/1.55 'Avenir';
     font-style: normal;
+    overflow: auto;
 }
 body{
     background-color: #ffffff !important;
@@ -186,6 +187,7 @@ background: linear-gradient(150deg, #39ef74, #4600f1 100%) ;
     color: #000000 !important;
     font-size: 1rem !important;
 }
+
 @media (max-width: 576px) { 
     #thumbnail-container{
         grid-template-columns: 1fr;

@@ -575,16 +575,13 @@ function goToSubject(subject_id) {
                         theme: "light2", // "light1", "light2", "dark1", "dark2"
                         exportEnabled: true,
                         animationEnabled: true,
-                        title: {
-                            text: "Number of module per subject"
-                        },
                         data: [{
                             type: "pie",
                             startAngle: 25,
                             toolTipContent: "<b>{label}</b>: {y}",
                             showInLegend: "true",
-                            legendText: "{label}",
-                            indexLabelFontSize: 16,
+                            legendText: "{label} - {y}",
+                            indexLabelFontSize: 15,
                             indexLabel: "{label} - {y}",
                             dataPoints: dataPoints
                         }]
@@ -600,6 +597,50 @@ function goToSubject(subject_id) {
                 alert('System error: Ajax not working properly');
             }  
         }); 
+    }
+    function genderChart() {
+        $.ajax({  
+            url:"../../php/onviewallgender.php",  
+            method:"POST",  
+            data: '',  
+            success: function(response) {
+                var dataPoints = [];
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+                    jsonData.data.forEach(element => {
+                        dataPoints.push({y: parseInt(element.y),label:element.label});
+                   });
+
+                   var chart = new CanvasJS.Chart("genderChart", {
+                    theme: "light2", 
+                    exportEnabled: true,
+                    animationEnabled: true,
+                    data: [{
+                        type: "doughnut",
+                        startAngle: 25,
+                        //innerRadius: 60,
+                        indexLabelFontSize: 15,
+                        showInLegend: "true",
+                        indexLabel: "{label} - #percent%",
+                        percentFormatString: "#0.##",
+                        toolTipContent: "{y} (#percent%)",
+                        legendText: "{label} - {y}",
+                        toolTipContent: "<b>{label}:</b> {y} ",
+                        dataPoints: dataPoints
+                    }]
+                }); 
+                chart.render();
+
+                
+                }else{
+                    alert(jsonData.error_msg);
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+       
     }
 /* ADMIN */
  
