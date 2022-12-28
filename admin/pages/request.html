@@ -12,7 +12,7 @@
     <title>Admin - Request</title>
     <script>
       window.onload = function () {
-          let account_info = sessionStorage.getItem("account");
+          let account_info = localStorage.getItem("account");
           var jsonData = JSON.parse(account_info);
           if(jsonData){
             onViewRequest();

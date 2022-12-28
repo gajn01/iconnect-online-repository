@@ -12,7 +12,7 @@
     <script>
         window.onload = function () {
             onViewSchool();
-            let school_list = sessionStorage.getItem("school_list");
+            let school_list = localStorage.getItem("school_list");
             var jsonData = JSON.parse(school_list);
             onGenerateDropListSchool(jsonData.data);
             /* if(!school_list){

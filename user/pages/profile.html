@@ -12,8 +12,8 @@
     <title>Admin</title>
     <script>
       window.onload = function () {
-          let user_account = sessionStorage.getItem("user_account");
-          let school_list = sessionStorage.getItem("school_list");
+          let user_account = localStorage.getItem("user_account");
+          let school_list = localStorage.getItem("school_list");
           let json_user = JSON.parse(user_account);
           if(!user_account){
               location.href = '../index.html';

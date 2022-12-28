@@ -186,6 +186,24 @@ background: linear-gradient(150deg, #39ef74, #4600f1 100%) ;
     color: #000000 !important;
     font-size: 1rem !important;
 }
+@media (max-width: 576px) { 
+    #thumbnail-container{
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    #thumbnail-container .card{
+        width: 400px;
+        margin: 0 auto;
+    }
+ }
+
+
+@media (min-width: 576px) { 
+    #thumbnail-container{
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+ }
 
 @media (min-width: 576px) { 
     #thumbnail-container{

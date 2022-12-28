@@ -48,7 +48,7 @@ function onLogin() {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
                     alert("Successfully login ");
-                    sessionStorage.setItem("account",response);
+                    localStorage.setItem("account",response);
                     location.href = '../admin/pages/dashboard.html';
                 }else{
                     alert(jsonData.error_msg);
@@ -69,7 +69,7 @@ function goToLogin() {
 function onLogout() {
     let text = "Are you sure you want to logout?";
     if (confirm(text)) {
-        sessionStorage.clear();
+        localStorage.clear();
         location.href = '../index.php';
     }
 }
@@ -100,11 +100,10 @@ function goToSubject(subject_id) {
             method:"GET",  
             data: "",  
             success: function(response) {
-                sessionStorage.removeItem("school_list");
+                localStorage.removeItem("school_list");
                 var jsonData = JSON.parse(response);
-                console.log(jsonData.data);
                 if (jsonData.success){
-                    sessionStorage.setItem("school_list",response);
+                    localStorage.setItem("school_list",response);
                     onGenerateListSchool(jsonData.data);
                 }else{
                     alert(jsonData.error_msg);
@@ -141,7 +140,7 @@ function goToSubject(subject_id) {
         school_address_input.innerText = "";
     }
     function onClickEditSchool(id) {
-        let school_list = sessionStorage.getItem("school_list");
+        let school_list = localStorage.getItem("school_list");
         var jsonData = JSON.parse(school_list);
         document.getElementById("school_submit_btn_update").style.display="block";
         document.getElementById("school_submit_btn_add").style.display="none";
@@ -236,10 +235,11 @@ function goToSubject(subject_id) {
             method:"GET",  
             data: "",  
             success: function(response) {
-                sessionStorage.removeItem("subject_list");
+                localStorage.removeItem("subject_list");
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
-                    sessionStorage.setItem("subject_list",response);
+                    localStorage.setItem("subject_list",response);
+                    localStorage.setItem("subject_list",response);
                     if(isAdmin == 0){
                         subject_container = document.querySelector('#thumbnail-container');
                         const color_array = ['primary','secondary','purple','green','primary','purple'];
@@ -261,7 +261,7 @@ function goToSubject(subject_id) {
                         newCard.innerHTML = card_template;
                         ctr = ctr + 1;
                         });
-                    }else{
+                    }else if(isAdmin == 1){
                         onGenerateListSubject(jsonData.data);
                     }
                 }else{
@@ -302,7 +302,7 @@ function goToSubject(subject_id) {
         subject_description_input.innerText = "";
     }
     function onClickEditSubject(id) {
-        let subject_list = sessionStorage.getItem("subject_list");
+        let subject_list = localStorage.getItem("subject_list");
         var jsonData = JSON.parse(subject_list);
         document.getElementById("subject_submit_btn_update").style.display="block";
         document.getElementById("subject_submit_btn_add").style.display="none";
@@ -396,12 +396,12 @@ function goToSubject(subject_id) {
             method:"POST",  
             data: {status_id: 0},  
             success: function(response) {
-                sessionStorage.removeItem("request_list");
+                localStorage.removeItem("request_list");
                 var jsonData = JSON.parse(response);
                 var table = document.querySelector("table");
                 var template;
                 if (jsonData.success){
-                    sessionStorage.setItem("request_list",response);
+                    localStorage.setItem("request_list",response);
                     onGenerateListRequest(jsonData.data);
                 }else{
                     /* alert(jsonData.error_msg); */
@@ -447,7 +447,7 @@ function goToSubject(subject_id) {
         });
     }
     function onClickEditRequest(id) {
-        let request_list = sessionStorage.getItem("request_list");
+        let request_list = localStorage.getItem("request_list");
         var jsonData = JSON.parse(request_list);
         console.log("check data: ",jsonData.data);
         jsonData.data.forEach(element => {
@@ -494,12 +494,12 @@ function goToSubject(subject_id) {
             method:"POST",  
             data: {status_id: 1},  
             success: function(response) {
-                sessionStorage.removeItem("teacher_list");
+                localStorage.removeItem("teacher_list");
                 var jsonData = JSON.parse(response);
                 var table = document.querySelector("table");
                 var template;
                 if (jsonData.success){
-                    sessionStorage.setItem("teacher_list",response);
+                    localStorage.setItem("teacher_list",response);
                     onGenerateListTeacher(jsonData.data);
                 }else{
                     template = 
@@ -537,7 +537,7 @@ function goToSubject(subject_id) {
         });
     }
     function onClickViewTeacher(id) {
-        let teacher_list = sessionStorage.getItem("teacher_list");
+        let teacher_list = localStorage.getItem("teacher_list");
         var jsonData = JSON.parse(teacher_list);
         console.log("check data: ",jsonData.data);
         jsonData.data.forEach(element => {
@@ -556,6 +556,50 @@ function goToSubject(subject_id) {
                  request_id_input.value = element.id
             }
         });
+    }
+    /* Charts */
+    function pieChart(){
+        $.ajax({  
+            url:"../../php/onviewallmodule.php",  
+            method:"POST",  
+            data: '',  
+            success: function(response) {
+                var dataPoints = [];
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+
+                    jsonData.data.forEach(element => {
+                        dataPoints.push(element);
+                   });
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        theme: "light2", // "light1", "light2", "dark1", "dark2"
+                        exportEnabled: true,
+                        animationEnabled: true,
+                        title: {
+                            text: "Number of module per subject"
+                        },
+                        data: [{
+                            type: "pie",
+                            startAngle: 25,
+                            toolTipContent: "<b>{label}</b>: {y}",
+                            showInLegend: "true",
+                            legendText: "{label}",
+                            indexLabelFontSize: 16,
+                            indexLabel: "{label} - {y}",
+                            dataPoints: dataPoints
+                        }]
+                    });
+                    chart.render();
+
+                
+                }else{
+                    alert(jsonData.error_msg);
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
     }
 /* ADMIN */
  
@@ -618,7 +662,7 @@ function goToSubject(subject_id) {
                     var jsonData = JSON.parse(response);
                     if (jsonData.success){
                         alert("Successfully login ");
-                        sessionStorage.setItem("user_account",response);
+                        localStorage.setItem("user_account",response);
                         location.href = '../user/pages/landing.html';
                     }else{
                         alert(jsonData.error_msg);
@@ -634,7 +678,7 @@ function goToSubject(subject_id) {
         let text = "Are you sure you want to logout?";
         if (confirm(text)) {
             location.href = '../index.html';
-            sessionStorage.clear();
+            localStorage.clear();
             localStorage.clear();
 
         }
@@ -646,12 +690,12 @@ function goToSubject(subject_id) {
             data: {subject_id: subject_id,
                     teacher_id: teacher_id},  
             success: function(response) {
-                sessionStorage.removeItem("module_list");
+                localStorage.removeItem("module_list");
                 var jsonData = JSON.parse(response);
                 var table = document.querySelector("table");
                 var template;
                 if (jsonData.success){
-                    sessionStorage.setItem("module_list",response);
+                    localStorage.setItem("module_list",response);
                     onGenerateListModule(jsonData.data);
                 }else{
                     /* alert(jsonData.error_msg); */
@@ -667,8 +711,28 @@ function goToSubject(subject_id) {
             }  
         }); 
     }
+    function onViewAllModule() {
+        $.ajax({  
+            url:"../../php/onviewallmodule.php",  
+            method:"POST",  
+            data: '',  
+            success: function(response) {
+                localStorage.removeItem("module_list");
+                var jsonData = JSON.parse(response);
+                if (jsonData.success){
+                    localStorage.setItem("module_list",response);
+                }else{
+                    alert(jsonData.error_msg);
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
+        }); 
+
+    }
     function onClickViewSubjectUser(subject_id) {
-        sessionStorage.removeItem("module_list");
+        localStorage.removeItem("module_list");
         window.location.href = "../pages/subject-details.html?id=" + subject_id ;
     }
     function onClickAddModuleModal() {
@@ -685,7 +749,7 @@ function goToSubject(subject_id) {
         document.getElementById("module_submit_btn_update").style.display="block";
         document.getElementById("module_submit_btn_add").style.display="none";
         onViewDownloadableList(id);
-        let module_list = sessionStorage.getItem("module_list");
+        let module_list = localStorage.getItem("module_list");
         var jsonData = JSON.parse(module_list);
         jsonData.data.forEach(element => {
             if(element.id == id){
@@ -706,10 +770,10 @@ function goToSubject(subject_id) {
                 table.innerHTML = "";
                 var ul = document.getElementById("module_file_list");
                 ul.innerHTML = "";
-                sessionStorage.removeItem("file_list");
+                localStorage.removeItem("file_list");
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
-                    sessionStorage.setItem("file_list",response);
+                    localStorage.setItem("file_list",response);
                     onGenerateListFile(jsonData.data);
                 }else{
                     document.getElementById("no_record").innerText ="No records!";
@@ -774,7 +838,7 @@ function goToSubject(subject_id) {
     function onAddModule() {
         const urlParams = new URLSearchParams(window.location.search);
         const subject_id = urlParams.get('id');
-        let user_account = sessionStorage.getItem("user_account");
+        let user_account = localStorage.getItem("user_account");
         var user_json = JSON.parse(user_account);
 
         var module_title = $('#module_title').val();
@@ -898,12 +962,12 @@ function goToSubject(subject_id) {
                     school_id: school_id,
                     teacher_id:teacher_id},  
             success: function(response) {
-                sessionStorage.removeItem("other_module_list");
+                localStorage.removeItem("other_module_list");
                 var jsonData = JSON.parse(response);
                 var table = document.querySelector("table");
                 var template;
                 if (jsonData.success){
-                    sessionStorage.setItem("other_module_list",response);
+                    localStorage.setItem("other_module_list",response);
                     onGenerateListOtherModule(jsonData.data);
                 }else{
                     template = 
@@ -939,7 +1003,7 @@ function goToSubject(subject_id) {
         });
     }
     function onPopulateUserProfile() {
-        let user_account = sessionStorage.getItem("user_account");
+        let user_account = localStorage.getItem("user_account");
         let json_user = JSON.parse(user_account);
         console.log('cehck', json_user);
 
@@ -965,7 +1029,7 @@ function goToSubject(subject_id) {
                 console.log('res:',$('#update_profile_form').serialize());
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
-                    sessionStorage.setItem("user_account",response);
+                    localStorage.setItem("user_account",response);
                     alert(jsonData.success_msg);
                     location.reload();
                 }else{

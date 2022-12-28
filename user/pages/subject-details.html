@@ -12,9 +12,9 @@
       window.onload = function () {
           const urlParams = new URLSearchParams(window.location.search);
           const subject_id = urlParams.get('id');
-          let user_account = sessionStorage.getItem("user_account");
+          let user_account = localStorage.getItem("user_account");
           let json_user = JSON.parse(user_account);
-          let subject_list = sessionStorage.getItem("subject_list");
+          let subject_list = localStorage.getItem("subject_list");
           let json_subject = JSON.parse(subject_list);
           let subject_name;
           let go_to_module = document.getElementById("go_to_module");
