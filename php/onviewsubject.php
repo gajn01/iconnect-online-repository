@@ -18,13 +18,8 @@
         $form_data['error_msg'] = "No records!";
     }
 
-    if($page < 0){
-        $limit = pow($limit , $page);
-        $sql=("SELECT * FROM tbl_subject WHERE subject_name LIKE '$search%' LIMIT $limit OFFSET $page  ");
-    }else{
-        $sql=("SELECT * FROM tbl_subject WHERE subject_name LIKE '$search%' LIMIT $limit OFFSET $page  ");
-    }
-
+   
+    $sql=("SELECT * FROM tbl_subject WHERE subject_name LIKE '$search%' LIMIT $limit OFFSET $page  ");
     $result = mysqli_query($db, $sql);
     $fetch = mysqli_fetch_all ($result, MYSQLI_ASSOC);
     $form_data['data'] = $fetch;

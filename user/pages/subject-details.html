@@ -35,21 +35,21 @@
 </head>
 <body>
     <div class="wrapper">
-        <nav id="topbar-nav">
+      <nav id="topbar-nav">
           <div class="container topbar">
-            <div class="logo-container">
-                <img src="../../assets/logo.png" width="60px" alt="" onClick="goToMainPage()">
-            </div>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="account_dropdown " data-bs-toggle="dropdown" aria-expanded="false">
-                <span id="account_name_label">user user </span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="account_dropdown">
-                <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                <li><a class="dropdown-item" href="#" onClick="onLogoutUser()">Logout</a></li>
-              </ul>
-            </div>
-        </div>
+              <div>
+                  <img src="../../assets/logo.png" width="60px" alt="">
+              </div>
+              <div class="">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="account_dropdown " data-bs-toggle="dropdown" aria-expanded="false">
+                    <span id="account_name_label">user user </span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="account_dropdown">
+                    <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                    <li><a class="dropdown-item" href="#" onClick="onLogoutUser()">Logout</a></li>
+                  </ul>
+                </div>
+          </div>
         </nav>
         <div class="content">
             <div class="container">
@@ -60,7 +60,7 @@
                 </ol>
               </nav>
                   <!-- Table section -->
-              <section >
+              <section  class="overflow-hidden">
                   <div class="header-button mt-5">
                     <div>
                       <button type="button" class="btn btn-primary btn-add" id="go_to_module">See Other Modules</button>
@@ -82,30 +82,31 @@
                               <th>Grade Level </th>
                               <th>Action</th>
                           </thead>
-                          <tbody class="table-group-divider"></tbody>
+                          <tbody class="table-group-divider"> </tbody>
                         </table>
                       </div>
                       <div class="pagination-container mt-4">
                         <div class="pager">
                           <p>Limit per Page</p>
-                          <select class="form-select page-number" aria-label="Default select example">
+                          <select class="form-select page-number" id="page_limit" onchange="onSelectLimit('subject')" aria-label="Default select example">
                             <option value="1">1</option>
                             <option value="5">5</option>
                             <option selected value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="1000000">All</option>
                           </select>
                         </div>
                         <nav aria-label="Page navigation example" class="bottom-pagination">
                           <ul class="pagination justify-content-end">
                             <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Previous">
+                              <a class="page-link" href="#" onclick="onPage(0,'subject')" id="prev" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                               </a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item "><a class="page-link" href="#" id="page_number">1</a></li>
                             <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Next">
+                              <a class="page-link" href="#" onclick="onPage(1,'subject')" id="next" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                               </a>
                             </li>

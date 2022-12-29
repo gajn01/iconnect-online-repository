@@ -97,7 +97,8 @@ nav a, nav li{
 
 /* Table */
 .table-content{
-    overflow: auto;
+    overflow-y: auto;
+    max-height: 600px !important;
 }
 .table-group-divider{
     border-color: #A0B8E8 !important;
@@ -120,6 +121,7 @@ table tbody{
 .table{
     text-align: center;
     margin: 0 !important;
+    min-height: 600px ;
 }
 
 .action-button{
@@ -175,7 +177,6 @@ table tbody{
 .card.purple {
 background: linear-gradient(150deg, #f731db, #4600f1 100%) !important;
 }
-
 .card.green {
 background: linear-gradient(150deg, #39ef74, #4600f1 100%) ;
 }
@@ -186,6 +187,13 @@ background: linear-gradient(150deg, #39ef74, #4600f1 100%) ;
 .dropdown-menu li a  {
     color: #000000 !important;
     font-size: 1rem !important;
+}
+form{
+    overflow: hidden;
+}
+.overflow-hidden{
+    overflow: hidden !important;
+
 }
 
 @media (max-width: 576px) { 

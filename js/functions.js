@@ -117,6 +117,8 @@ function onSearch(table) {
         onViewRequest();
     }else if(table == 'teacher'){
         onViewTeacher();
+    }else if(table == 'teacher'){
+        onViewTeacher();
     }
 }
 function onPage(params,table) {
@@ -336,8 +338,12 @@ function onPage(params,table) {
     }
     /* Subject  Function */
     function onViewSubject(isAdmin) {
-        var limit =  $('#page_limit').val();
-        var search =  $('#searchbar').val();
+        var limit = 10000;
+        var search = ""; 
+        if(isAdmin == 1){
+            limit =  $('#page_limit').val();
+            search =  $('#searchbar').val();
+        }
         $.ajax({  
             url:"../../php/onviewsubject.php",  
             method:"POST",  
@@ -345,6 +351,7 @@ function onPage(params,table) {
             success: function(response) {
                 localStorage.removeItem("subject_list");
                 var jsonData = JSON.parse(response);
+                console.log("subject",response);
                 if (jsonData.success){
                     localStorage.setItem("subject_list",response);
                     if(isAdmin == 0){
