@@ -5,6 +5,8 @@
 
     $limit = $_POST['limit'];
     $page = $_POST['page'];
+    $search = $_POST['search'];
+
 
     $sql=("SELECT COUNT(id) AS ctr FROM tbl_subject");
     $result = mysqli_query($db, $sql);
@@ -19,10 +21,10 @@
 
     if($page < 0){
         $limit = pow($limit , $page);
-        var_dump($limit);
-        $sql=("SELECT * FROM tbl_subject LIMIT $limit OFFSET $page");
+       
+        $sql=("SELECT * FROM tbl_subject WHERE subject_name LIKE '$search%' LIMIT $limit OFFSET $page  ");
     }else{
-        $sql=("SELECT * FROM tbl_subject LIMIT $limit OFFSET $page");
+        $sql=("SELECT * FROM tbl_subject WHERE subject_name LIKE '$search%' LIMIT $limit OFFSET $page  ");
     }
 
     $result = mysqli_query($db, $sql);

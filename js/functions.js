@@ -241,10 +241,14 @@ function goToSubject(subject_id) {
     /* Subject  Function */
     function onViewSubject(isAdmin) {
         var limit =  $('#page_limit').val();
+        var search =  $('#searchbar').val();
+
+        console.log("search",search);
+
         $.ajax({  
             url:"../../php/onviewsubject.php",  
             method:"POST",  
-            data: {limit:limit,page:page*limit},  
+            data: {limit:limit,page:page*limit,search:search},  
             success: function(response) {
                 localStorage.removeItem("subject_list");
                 var jsonData = JSON.parse(response);
