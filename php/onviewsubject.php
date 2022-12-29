@@ -11,7 +11,6 @@
     $sql=("SELECT COUNT(id) AS ctr FROM tbl_subject");
     $result = mysqli_query($db, $sql);
     $fetch = mysqli_fetch_all ($result, MYSQLI_ASSOC);
-    $form_data['data'] = $fetch;
     if($fetch){
         $form_data['page_limit'] = $fetch;
     }else{
@@ -21,7 +20,6 @@
 
     if($page < 0){
         $limit = pow($limit , $page);
-       
         $sql=("SELECT * FROM tbl_subject WHERE subject_name LIKE '$search%' LIMIT $limit OFFSET $page  ");
     }else{
         $sql=("SELECT * FROM tbl_subject WHERE subject_name LIKE '$search%' LIMIT $limit OFFSET $page  ");

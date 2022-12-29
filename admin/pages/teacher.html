@@ -69,7 +69,7 @@
               <!-- Table -->
               <section>
                 <div class="header-button mt-5">
-                  <input class="searchbar" type="text" name="searchbar" id="searchbar" placeholder="Search here...">
+                  <input class="searchbar" type="text" name="searchbar" id="searchbar" placeholder="Search here..." onkeyup="onSearch('teacher')">
                   <!-- <button type="button" class="btn btn-primary btn-add">Filter</button> -->
                   </div>
               </section>
@@ -95,24 +95,25 @@
                     <div class="pagination-container mt-4">
                       <div class="pager">
                         <p>Limit per Page</p>
-                        <select class="form-select page-number" aria-label="Default select example">
+                        <select class="form-select page-number" id="page_limit" onchange="onSelectLimit('teacher')" aria-label="Default select example">
                           <option value="1">1</option>
                           <option value="5">5</option>
                           <option selected value="10">10</option>
+                          <option value="20">20</option>
+                          <option value="50">50</option>
+                          <option value="1000000">All</option>
                         </select>
                       </div>
                       <nav aria-label="Page navigation example" class="bottom-pagination">
                         <ul class="pagination justify-content-end">
                           <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                            <a class="page-link" href="#" onclick="onPage(0,'teacher')" id="prev" aria-label="Previous">
                               <span aria-hidden="true">&laquo;</span>
                             </a>
                           </li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item "><a class="page-link" href="#" id="page_number">1</a></li>
                           <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                            <a class="page-link" href="#" onclick="onPage(1,'teacher')" id="next" aria-label="Next">
                               <span aria-hidden="true">&raquo;</span>
                             </a>
                           </li>

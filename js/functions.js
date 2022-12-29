@@ -92,6 +92,72 @@ function goToOtherModule(subject_id) {
 function goToSubject(subject_id) {
     location.href = "../pages/subject-details.html?id=" + subject_id ;
 }
+function onSelectLimit(table) {
+    page = 0;
+    ctr  = 0;
+    document.getElementById("page_number").innerText = page+1;
+    if(table == 'subject'){
+        onViewSubject(1);
+    }else if(table == 'school'){
+        onViewSchool();
+    }else if(table == 'request'){
+        onViewRequest();
+    }else if(table == 'teacher'){
+        onViewTeacher();
+    }
+}
+function onSearch(table) {
+    ctr =0;
+    page = 0;
+    if(table == 'subject'){
+        onViewSubject(1);
+    }else if(table == 'school'){
+        onViewSchool();
+    }else if(table == 'request'){
+        onViewRequest();
+    }else if(table == 'teacher'){
+        onViewTeacher();
+    }
+}
+function onPage(params,table) {
+    limit =  $('#page_limit').val();
+    setPage = items / limit
+    totalPage = Math.trunc(items / limit)
+    if( setPage % 1){
+        totalPage = totalPage +1
+    }
+    if(params == 1){
+        if(totalPage > page+1){
+            page +=1;
+            ctr = (ctr-1) + 1;
+            console.log("ctr:",ctr);
+            document.getElementById("page_number").innerText = page+1;
+            document.getElementById("prev").style.display = "block";
+        }
+    }else{
+        ctr--;
+        if(page != 0){
+            page -=1;
+            ctr-=limit;
+            if(page == 0){
+                ctr = 0;
+            }
+            console.log("ctr:",ctr);
+            document.getElementById("page_number").innerText = page+1;
+            document.getElementById("prev").style.display = "none";
+            document.getElementById("prev").style.display = "block";
+        }
+    }
+    if(table == 'subject'){
+        onViewSubject(1);
+    }else if(table == 'school'){
+        onViewSchool();
+    }else if(table == 'request'){
+        onViewRequest();
+    }else if(table == 'teacher'){
+        onViewTeacher();
+    }
+}
 /* ADMIN */
     function onGenerateDropListSchool(data) {
         data.forEach(element => {
@@ -104,16 +170,48 @@ function goToSubject(subject_id) {
         });
     }
 /* School  Function */
+ 
     function onViewSchool() {
+        var limit =  $('#page_limit').val();
+        var search =  $('#searchbar').val();
         $.ajax({  
             url:"../../php/onviewschool.php",  
-            method:"GET",  
-            data: "",  
+            method:"POST",  
+            data: {limit:limit,page:page*limit,search:search},  
             success: function(response) {
                 localStorage.removeItem("school_list");
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
                     localStorage.setItem("school_list",response);
+                    items = jsonData.page_limit[0].ctr;
+                    setPage = items / limit
+                    totalPage = Math.trunc(items / limit)
+                    if( setPage % 1){
+                        totalPage = totalPage +1
+                    }
+                    if(parseInt(limit) > parseInt(items)){
+                        document.getElementById("next").style.display = "none";
+                        document.getElementById("prev").style.display = "none";
+                    }else{
+                        if(page <= 0){
+                            document.getElementById("prev").style.display = "none";
+                            document.getElementById("next").style.display = "block";
+
+                        }else if(totalPage <= page+1){
+                            document.getElementById("next").style.display = "none";
+                            document.getElementById("prev").style.display = "block";
+                        }
+                    }
+                    var table = document.querySelector("table");
+                    table.innerHTML =  "";
+                    var template =`
+                        <thead>
+                            <th>#</th>
+                            <th>School Name</th>
+                            <th>School Address</th>
+                            <th>Action</th>
+                        </thead>`;
+                    table.innerHTML += template;
                     onGenerateListSchool(jsonData.data);
                 }else{
                     alert(jsonData.error_msg);
@@ -127,13 +225,11 @@ function goToSubject(subject_id) {
     function onGenerateListSchool(data) {
         var table = document.querySelector("table");
         var template;
-        var ctr=0;
         data.forEach(element => {
                 ctr = ctr + 1;
                 template = 
             `<tr>
                 <td>${ctr}</td>
-                <td>${element.id}</td>
                 <td>${element.school_name}</td>
                 <td>${element.school_address}</td>
                 <td>
@@ -242,9 +338,6 @@ function goToSubject(subject_id) {
     function onViewSubject(isAdmin) {
         var limit =  $('#page_limit').val();
         var search =  $('#searchbar').val();
-
-        console.log("search",search);
-
         $.ajax({  
             url:"../../php/onviewsubject.php",  
             method:"POST",  
@@ -276,18 +369,12 @@ function goToSubject(subject_id) {
                         counter += 1;
                         });
                     }else if(isAdmin == 1){ 
-                        limit =  $('#page_limit').val();
                         items = jsonData.page_limit[0].ctr;
                         setPage = items / limit
                         totalPage = Math.trunc(items / limit)
                         if( setPage % 1){
                             totalPage = totalPage +1
                         }
-                        console.log("page:",page);
-                        console.log("items:",items);
-                        console.log("limit:",limit);
-                        console.log("total page:",totalPage);
-
                         if(parseInt(limit) > parseInt(items)){
                             document.getElementById("next").style.display = "none";
                             document.getElementById("prev").style.display = "none";
@@ -300,12 +387,12 @@ function goToSubject(subject_id) {
                                 document.getElementById("next").style.display = "none";
                                 document.getElementById("prev").style.display = "block";
                             }
-                            
                         }
                         var table = document.querySelector("table");
                         table.innerHTML =  "";
                         var template =`
                             <thead>
+                                <th>#</th>
                                 <th>Subject Name</th>
                                 <th>Subject Description</th>
                                 <th>Action</th>
@@ -326,8 +413,10 @@ function goToSubject(subject_id) {
         var table = document.querySelector("table");
         var template;
         data.forEach(element => {
+            ctr = ctr + 1;
                 template = 
             `<tr>
+                <td>${ctr}</td>
                 <td>${element.subject_name}</td>
                 <td class="w-50">${element.subject_description}</td>
                 <td>
@@ -431,39 +520,14 @@ function goToSubject(subject_id) {
                 }  
         }); 
     }
-    function onPage(params) {
-        limit =  $('#page_limit').val();
-      
-        setPage = items / limit
-        totalPage = Math.trunc(items / limit)
-        if( setPage % 1){
-            totalPage = totalPage +1
-        }
-        if(params == 1){
-            if(totalPage > page+1){
-                page +=1;
-                console.log("ctr:",ctr);
-                document.getElementById("page_number").innerText = page+1;
-                document.getElementById("prev").style.display = "block";
-            }
-        }else{
-            if(page != 0){
-                page -=1;
-                console.log("ctr:",ctr);
-                document.getElementById("page_number").innerText = page+1;
-                document.getElementById("prev").style.display = "none";
-                document.getElementById("prev").style.display = "block";
-            }
-        }
-        onViewSubject(1);
-    }
-
     /* Request Function */
     function onViewRequest() {
+        var limit =  $('#page_limit').val();
+        var search =  $('#searchbar').val();
         $.ajax({  
             url:"../../php/onviewrequest.php",  
             method:"POST",  
-            data: {status_id: 0},  
+            data: {limit:limit,page:page*limit,search:search,status_id: 0},  
             success: function(response) {
                 localStorage.removeItem("request_list");
                 var jsonData = JSON.parse(response);
@@ -471,9 +535,58 @@ function goToSubject(subject_id) {
                 var template;
                 if (jsonData.success){
                     localStorage.setItem("request_list",response);
+                    items = jsonData.page_limit[0].ctr;
+                    setPage = items / limit
+                    totalPage = Math.trunc(items / limit)
+                    if( setPage % 1){
+                        totalPage = totalPage +1
+                    }
+                    if(parseInt(limit) > parseInt(items)){
+                        document.getElementById("next").style.display = "none";
+                        document.getElementById("prev").style.display = "none";
+                    }else{
+                        if(page <= 0){
+                            document.getElementById("prev").style.display = "none";
+                            document.getElementById("next").style.display = "block";
+
+                        }else if(totalPage <= page+1){
+                            document.getElementById("next").style.display = "none";
+                            document.getElementById("prev").style.display = "block";
+                        }
+                    }
+                    var table = document.querySelector("table");
+                    table.innerHTML =  "";
+                    var template =`
+                        <thead>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>School</th>
+                            <th>Rank</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>`;
+                    table.innerHTML += template;
                     onGenerateListRequest(jsonData.data);
                 }else{
                     /* alert(jsonData.error_msg); */
+                    var table = document.querySelector("table");
+                    table.innerHTML =  "";
+                    var template =`
+                        <thead>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>School</th>
+                            <th>Rank</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>`;
+                    table.innerHTML += template;
                     template = 
                         `<tr >
                             <td colspan="9" >${jsonData.error_msg}</td>
@@ -489,7 +602,6 @@ function goToSubject(subject_id) {
     function onGenerateListRequest(data) {
         var table = document.querySelector("table");
         var template;
-        var ctr=0;
         data.forEach(element => {
             ctr = ctr + 1;
             var status;
@@ -558,10 +670,12 @@ function goToSubject(subject_id) {
     }
     /* Teacher Function */
     function onViewTeacher() {
+        var limit =  $('#page_limit').val();
+        var search =  $('#searchbar').val();
         $.ajax({  
             url:"../../php/onviewrequest.php",  
             method:"POST",  
-            data: {status_id: 1},  
+            data: {limit:limit,page:page*limit,search:search,status_id: 1},  
             success: function(response) {
                 localStorage.removeItem("teacher_list");
                 var jsonData = JSON.parse(response);
@@ -569,8 +683,56 @@ function goToSubject(subject_id) {
                 var template;
                 if (jsonData.success){
                     localStorage.setItem("teacher_list",response);
+                    items = jsonData.page_limit[0].ctr;
+                    setPage = items / limit
+                    totalPage = Math.trunc(items / limit)
+                    if( setPage % 1){
+                        totalPage = totalPage +1
+                    }
+                    if(parseInt(limit) > parseInt(items)){
+                        document.getElementById("next").style.display = "none";
+                        document.getElementById("prev").style.display = "none";
+                    }else{
+                        if(page <= 0){
+                            document.getElementById("prev").style.display = "none";
+                            document.getElementById("next").style.display = "block";
+
+                        }else if(totalPage <= page+1){
+                            document.getElementById("next").style.display = "none";
+                            document.getElementById("prev").style.display = "block";
+                        }
+                    }
+                    var table = document.querySelector("table");
+                    table.innerHTML =  "";
+                    var template =`
+                        <thead>
+                             <th>#</th>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>School</th>
+                            <th>Rank</th>
+                            <th>Action</th>
+                        </thead>`;
+                    table.innerHTML += template;
                     onGenerateListTeacher(jsonData.data);
                 }else{
+                    /* alert(jsonData.error_msg); */
+                    var table = document.querySelector("table");
+                    table.innerHTML =  "";
+                    var template =`
+                        <thead>
+                             <th>#</th>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>School</th>
+                            <th>Rank</th>
+                            <th>Action</th>
+                        </thead>`;
+                    table.innerHTML += template;
                     template = 
                         `<tr >
                             <td colspan="9" >${jsonData.error_msg}</td>
@@ -586,7 +748,6 @@ function goToSubject(subject_id) {
     function onGenerateListTeacher(data) {
         var table = document.querySelector("table");
         var template;
-        var ctr=0;
         data.forEach(element => {
             ctr = ctr + 1;
             template = 
@@ -1155,7 +1316,6 @@ function goToSubject(subject_id) {
     function onPopulateUserProfile() {
         let user_account = localStorage.getItem("user_account");
         let json_user = JSON.parse(user_account);
-        console.log('cehck', json_user);
 
         lastname_input.value = json_user.data.lastname;
         firstname_input.value = json_user.data.firstname;
