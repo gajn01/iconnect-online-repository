@@ -32,6 +32,10 @@ const grade_level_input = document.getElementById("grade_level");
 const module_description_input = document.getElementById("module_description");
 
 
+var ctr=  0;
+var page = 0;
+let items =0;
+let limit =  $('#page_limit').val();
 
 function onLogin() {
     var username = $('#username').val();  
@@ -230,23 +234,23 @@ function goToSubject(subject_id) {
     }
     /* Subject  Function */
     function onViewSubject(isAdmin) {
+        var limit =  $('#page_limit').val();
         $.ajax({  
             url:"../../php/onviewsubject.php",  
-            method:"GET",  
-            data: "",  
+            method:"POST",  
+            data: {limit:limit,page:page*limit},  
             success: function(response) {
                 localStorage.removeItem("subject_list");
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
                     localStorage.setItem("subject_list",response);
-                    localStorage.setItem("subject_list",response);
                     if(isAdmin == 0){
                         subject_container = document.querySelector('#thumbnail-container');
                         const color_array = ['primary','secondary','purple','green','primary','purple'];
-                        var ctr=0;
+                        var counter =0;
                         jsonData.data.forEach(element => {
                             let newCard = document.createElement('div');
-                            newCard.classList.add(color_array[ctr]);
+                            newCard.classList.add('secondary');
                             newCard.classList.add('card');
                             subject_description = element.subject_description;
                             newCard.setAttribute("onclick","onClickViewSubjectUser( "+ element.id +")");
@@ -259,17 +263,26 @@ function goToSubject(subject_id) {
                             subject_container.appendChild(newCard);
                         // Inject the template html on DOM's new append item
                         newCard.innerHTML = card_template;
-                        ctr = ctr + 1;
+                        counter += 1;
                         });
-                    }else if(isAdmin == 1){
+                    }else if(isAdmin == 1){ 
+                        limit =  $('#page_limit').val();
+                        /* ctr = 0;
+                        ctr = parseInt(limit); */
+                        items = jsonData.page_limit[0].ctr;
+                        var table = document.querySelector("table");
+                        table.innerHTML =  "";
+                        var template =`
+                            <thead>
+                                <th>Subject Name</th>
+                                <th>Subject Description</th>
+                                <th>Action</th>
+                            </thead>`;
+                        table.innerHTML += template;
                         onGenerateListSubject(jsonData.data);
                     }
                 }else{
-                    template = 
-                        `<tr >
-                            <td colspan="5" >${jsonData.error_msg}</td>
-                        </tr>`;
-                    table.innerHTML += template;
+                    
                 }
             },
             error: function() {
@@ -280,12 +293,9 @@ function goToSubject(subject_id) {
     function onGenerateListSubject(data) {
         var table = document.querySelector("table");
         var template;
-        var ctr=0;
         data.forEach(element => {
-                ctr = ctr + 1;
                 template = 
             `<tr>
-                <td>${ctr}</td>
                 <td>${element.subject_name}</td>
                 <td class="w-50">${element.subject_description}</td>
                 <td>
@@ -389,6 +399,32 @@ function goToSubject(subject_id) {
                 }  
         }); 
     }
+    function onPage(params) {
+        limit =  $('#page_limit').val();
+        let setPage = items / limit
+        let totalPage = Math.round(items / limit)
+        if( setPage % 1){
+            totalPage = totalPage +1
+        }
+        console.log("total page:",totalPage);
+        console.log(" page:",page);
+        console.log(" limit:",limit);
+        if(params == 1){
+            if(totalPage > page+1){
+                page +=1;
+                console.log("ctr:",ctr);
+                document.getElementById("page_number").innerText = page+1;
+            }
+        }else{
+            if(page != 0){
+                page -=1;
+                console.log("ctr:",ctr);
+                document.getElementById("page_number").innerText = page+1;
+            }
+        }
+        onViewSubject(1);
+    }
+
     /* Request Function */
     function onViewRequest() {
         $.ajax({  

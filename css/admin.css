@@ -174,11 +174,16 @@ table tbody{
 .bottom-pagination{
     margin-top: rem;
 }
+.page-link .active{
+    background: #019cde  !important;
+    color: #ffffff !important;
+}
 .page-link{
     background-color:#8bd4f6 !important;
-    color: #000000 !important;
+    color: #000000 !important ;
     border-radius: 10px !important;
 }
+
 .page-item{
     margin-right: 5px !important;
 }
@@ -223,6 +228,7 @@ table tbody{
     background-color: #019cde  !important;
     color: #ffffff !important;
 }
+
 /* searchbar */
 .searchbar{
     border-radius: 15px;
