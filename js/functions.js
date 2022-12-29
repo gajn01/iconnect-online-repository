@@ -37,6 +37,12 @@ var page = 0;
 let items =0;
 let limit =  $('#page_limit').val();
 
+let setPage = items / limit
+let totalPage = Math.trunc(items / limit)
+if( setPage % 1){
+    totalPage = totalPage +1
+}
+
 function onLogin() {
     var username = $('#username').val();  
     var password = $('#password').val();  
@@ -267,9 +273,31 @@ function goToSubject(subject_id) {
                         });
                     }else if(isAdmin == 1){ 
                         limit =  $('#page_limit').val();
-                        /* ctr = 0;
-                        ctr = parseInt(limit); */
                         items = jsonData.page_limit[0].ctr;
+                        setPage = items / limit
+                        totalPage = Math.trunc(items / limit)
+                        if( setPage % 1){
+                            totalPage = totalPage +1
+                        }
+                        console.log("page:",page);
+                        console.log("items:",items);
+                        console.log("limit:",limit);
+                        console.log("total page:",totalPage);
+
+                        if(parseInt(limit) > parseInt(items)){
+                            document.getElementById("next").style.display = "none";
+                            document.getElementById("prev").style.display = "none";
+                        }else{
+                            if(page <= 0){
+                                document.getElementById("prev").style.display = "none";
+                                document.getElementById("next").style.display = "block";
+    
+                            }else if(totalPage <= page+1){
+                                document.getElementById("next").style.display = "none";
+                                document.getElementById("prev").style.display = "block";
+                            }
+                            
+                        }
                         var table = document.querySelector("table");
                         table.innerHTML =  "";
                         var template =`
@@ -401,25 +429,26 @@ function goToSubject(subject_id) {
     }
     function onPage(params) {
         limit =  $('#page_limit').val();
-        let setPage = items / limit
-        let totalPage = Math.round(items / limit)
+      
+        setPage = items / limit
+        totalPage = Math.trunc(items / limit)
         if( setPage % 1){
             totalPage = totalPage +1
         }
-        console.log("total page:",totalPage);
-        console.log(" page:",page);
-        console.log(" limit:",limit);
         if(params == 1){
             if(totalPage > page+1){
                 page +=1;
                 console.log("ctr:",ctr);
                 document.getElementById("page_number").innerText = page+1;
+                document.getElementById("prev").style.display = "block";
             }
         }else{
             if(page != 0){
                 page -=1;
                 console.log("ctr:",ctr);
                 document.getElementById("page_number").innerText = page+1;
+                document.getElementById("prev").style.display = "none";
+                document.getElementById("prev").style.display = "block";
             }
         }
         onViewSubject(1);
