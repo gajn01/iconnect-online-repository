@@ -51,7 +51,7 @@ function onLogin() {
         alert('All Fields are required!');
     }else{
         $.ajax({  
-            url:"../php/login.php",  
+            url:"../php/loginadmin.php",  
             method:"POST",  
             data: $('#submit_form').serialize(),  
             success: function(response) {

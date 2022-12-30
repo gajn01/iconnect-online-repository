@@ -13,7 +13,7 @@ include("connection.php"); //Establishing connection with our database
         $password = mysqli_real_escape_string($db, $password);
         $password = md5($password);
         
-        $sql=("SELECT * FROM tbl_account WHERE username='$username' and password='$password'");
+        $sql=("SELECT * FROM tbl_account_admin WHERE username='$username' and password='$password'");
         $result= mysqli_query($db,$sql);
         $form_data = array();
         if ($result->num_rows > 0) {
