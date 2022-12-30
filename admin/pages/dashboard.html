@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/admin.css">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script> -->
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <script src="../../js/jquery.js"></script>
-    <title>Admin</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="../assets/logo.ico">
+    <title>Admin - Dashboard</title>
     <script>
         window.onload = function () {
             onViewSubject(2);
@@ -20,7 +19,7 @@
                 genderChart();
                 dashboardContent();
             }else{
-            location.href = '../index.php';
+            location.href = '../index.html';
             }
             }
     </script>
@@ -29,7 +28,7 @@
     <div class="wrapper">
         <nav id="sidebar">
             <div class="sidebar-nav">
-                    <img src="../../assets/logo.png"  width="200px" alt="">
+                    <img src="../assets/logo.png"  width="200px" alt="">
                 <div class="sidebar-content">
                     <a href="" class="active" >Dashboard</a>
                     <a href="../pages/request.html">Request</a>
@@ -45,7 +44,7 @@
                   <!-- Mobile view button -->
                 <div class="top-header-mobile text-end d-lg-none ">
                     <div class="btn btn-bar"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
-                    <img  class="bars-icon" src="../../assets/bars.svg" width="20px" alt="">
+                    <img  class="bars-icon" src="../assets/bars.svg" width="20px" alt="">
                     </div>
                     <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
                     <div class="offcanvas-header justify-content-end ">
@@ -54,7 +53,7 @@
                     <div class="offcanvas-body text-center">
                         <div class="text-center">
                         <div class="circle">
-                            <img class="mt-3" src="../../assets/logo.png"  width="100px" alt="">
+                            <img class="mt-3" src="../assets/logo.png"  width="100px" alt="">
                         </div>
                         <div class="sidebar-content-mobile">
                             <a href="" class="active" >Dashboard</a>
@@ -132,9 +131,8 @@
             </div>
         </div>
     </div>
-    <script src="../../js/functions.js"></script>
+    <script src="../js/functions.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="../../js/bootstrap-bundle.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>
