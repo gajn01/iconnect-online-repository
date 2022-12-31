@@ -10,7 +10,7 @@ include("connection.php");
             /* FIles input */
             $targetDir = "../uploads/";
             $fileName = basename($_FILES["module_file"]["name"]);
-            $targetFilePath = $_SERVER["DOCUMENT_ROOT"] . $fileName;
+            $targetFilePath = $targetDir . $fileName;
             $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 
             $sql_file_upload = "INSERT into tbl_module_file (module_id,file_path) VALUES ('$module_id','$fileName')";
