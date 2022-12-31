@@ -46,9 +46,17 @@ function onLoginUser() {
             success: function(response) {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
-                    alert("Successfully login ");
-                    localStorage.setItem("user_account",response);
-                    location.href = '../user/pages/landing.html';
+                    if(jsonData.data.status == 1){
+                        alert("Successfully login ");
+                        localStorage.setItem("user_account",response);
+                        location.href = '../user/pages/landing.html';
+                    }else if(jsonData.data.status == 0){
+                        alert("Your account is still pending for approval");
+                    }
+                   /*  else if(jsonData.data.status == 3){
+                        alert("Your account is deactivated");
+                    } */
+                    
                 }else{
                     alert(jsonData.error_msg);
                 }
