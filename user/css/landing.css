@@ -6,7 +6,6 @@
     /* transition: all 0.3s; */
     font: 20px/1.55 'Avenir';
     font-style: normal;
-    overflow: auto;
 }
 body{
     background-color: #ffffff !important;
@@ -121,7 +120,10 @@ table tbody{
 .table{
     text-align: center;
     margin: 0 !important;
-    min-height: 600px ;
+    min-height: 400px ;
+}
+#file_container .table{
+    min-height: 0 !important;
 }
 
 .action-button{
@@ -193,7 +195,9 @@ form{
 }
 .overflow-hidden{
     overflow: hidden !important;
-
+}
+.cursor-pointer{
+    cursor: pointer;
 }
 
 @media (max-width: 576px) { 

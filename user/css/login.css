@@ -21,7 +21,7 @@ body{
 
 /* Login layout */
 #login-content{
-    padding: 2rem;
+    padding: .7rem 2rem;
     background-color: #8bd4f6;
     border-radius: 25px;
 }
@@ -40,7 +40,7 @@ body{
     font-weight: 500;
     font-size: 2rem;
     line-height: 44px;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     color: #000000;
 }
 .login-form input:not([type="checkbox"]){
@@ -119,6 +119,9 @@ body{
 }
 small,.condition{
     font-size: .8rem !important;
+}
+.cursor-pointer{
+    cursor: pointer;
 }
 
 /* Meduim size */
