@@ -61,7 +61,7 @@ include("connection.php");
                     $form_data = array();
                     if (mysqli_query($db, $sql_insert_profile)) {
                         $form_data['success'] = true;
-                        $form_data['success_msg'] = "New record created successfully";
+                        $form_data['success_msg'] = "Successfully registered";
                     } else {
                         $form_data['success'] = false;
                         $form_data['error_msg'] = $sql_insert_profile;

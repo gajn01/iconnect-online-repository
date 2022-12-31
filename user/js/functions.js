@@ -73,6 +73,8 @@ function onSignUp() {
     var address = $('#address').val();
     var rank = $('#rank').val();
     var school = $('#school').val();
+    var terms = document.getElementById("terms").checked ;
+
     if(password != confirm_password ){
         alert('Password and confirm password does not match!');
     }else{
@@ -80,26 +82,36 @@ function onSignUp() {
             alert('All Fields are required!');
         }else{
             /* Check if Username is existing */
-            $.ajax({  
-                url:"../php/onsignup.php",  
-                method:"POST",  
-                data: $('#signup_form').serialize(),  
-                success: function(response) {
-                    console.log('check result: ',response);
-                    var jsonData = JSON.parse(response);
-                    if (jsonData.success){
-                        alert(jsonData.success_msg);
-                        goToLogin();
-                    }else{
-                        alert(jsonData.error_msg);
-                    }
-                    },
-                    error: function() {
-                    alert('System error: Ajax not working properly');
-                    }  
-            }); 
+            if(terms){
+                $.ajax({  
+                    url:"../php/onsignup.php",  
+                    method:"POST",  
+                    data: $('#signup_form').serialize(),  
+                    success: function(response) {
+                        console.log('check result: ',response);
+                        var jsonData = JSON.parse(response);
+                        if (jsonData.success){
+                            alert(jsonData.success_msg);
+                            goToLogin();
+                        }else{
+                            alert(jsonData.error_msg);
+                        }
+                        },
+                        error: function() {
+                        alert('System error: Ajax not working properly');
+                        }  
+                }); 
+            }else{
+                alert('Please agree with the Terms & Condition!');
+            }
         }
     }
+  
+
+
+
+
+  
 }  
 
 function onLogoutUser() {
