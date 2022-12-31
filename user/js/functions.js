@@ -565,7 +565,7 @@ function onDeleteModule_file(id) {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success){
                     alert(jsonData.success_msg);
-                    /* location.reload(); */
+                    location.reload();
                 }else{
                     alert(jsonData.error_msg);
                 }

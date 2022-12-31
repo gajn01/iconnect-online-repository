@@ -52,7 +52,7 @@ function onLogin() {
                 if (jsonData.success){
                     alert("Successfully login ");
                     localStorage.setItem("account",response);
-                    location.href = '/pages/dashboard.html';
+                    location.href = '../admin/pages/dashboard.html';
                 }else{
                     alert(jsonData.error_msg);
                 }
@@ -870,6 +870,46 @@ function onGenerateDropListSchool(data) {
                 error: function() {
                     alert('System error: Ajax not working properly');
                 }  
+        }); 
+    }
+    function ageChart() {
+
+        $.ajax({  
+            url:"../php/onviewage.php",  
+            method:"POST",  
+            data: '',  
+            success: function(response) {
+                var dataPoints = [];
+                var jsonData = JSON.parse(response);
+                console.log("data",jsonData );
+                if (jsonData.success){
+                    jsonData.data.forEach(element => {
+                        dataPoints.push({y: parseInt(element.y),label:element.label});
+                   });
+                   var chart = new CanvasJS.Chart("ageChart", {
+                    animationEnabled: true,
+                    theme: "light1", // "light1", "light2", "dark1", "dark2"
+                  /*   axisY: {
+                        title: "Reserves(MMbbl)"
+                    }, */
+                    data: [{        
+                        type: "column",  
+                        showInLegend: true, 
+                        legendMarkerColor: "grey",
+                        legendText: "Age Range",
+                        dataPoints: dataPoints
+                    }]
+                });
+                chart.render();
+
+                
+                }else{
+                    alert(jsonData.error_msg);
+                }
+            },
+            error: function() {
+                alert('System error: Ajax not working properly');
+            }  
         }); 
     }
  

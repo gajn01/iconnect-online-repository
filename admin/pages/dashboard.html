@@ -18,8 +18,9 @@
                 pieChart();
                 genderChart();
                 dashboardContent();
+                ageChart();
             }else{
-            location.href = '../index.html';
+                location.href = '../index.html';
             }
             }
     </script>
@@ -39,7 +40,7 @@
                 <a class="btn btn-primary btn-logout" onClick="onLogout()">Logout</a>
             </div>
         </nav>
-        <div class="content">
+        <div class="content mb-3">
             <div class="container">
                   <!-- Mobile view button -->
                 <div class="top-header-mobile text-end d-lg-none ">
@@ -124,6 +125,13 @@
                                     <div id="genderChart" style="height: 320px; width: 100%;"></div>
                                 </div>
                             </div>
+                            <div class="row mt-3 ">
+                                <div class="col-sm-12 col-md-12  col-lg-12">
+                                    <h3 >Age range bracket</h3>
+                                    <div id="ageChart" style="height: 300px; width: 100%;"></div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </section>
