@@ -469,12 +469,12 @@ function onAddModule() {
     var grade_level = $('#grade_level').val();
     var module_description = $('#module_description').val();
     var file = $('#module_file').val();
-
     var form = $('#module_form')[0];
     var formData = new FormData(form);
     formData.append( 'teacher_id', user_json.data.id );
     formData.append( 'school_id', user_json.data.school_id );
     formData.append( 'subject_id', subject_id);
+
     if(module_title == '' || grade_level == ''|| module_description == ''|| file == ''){  
         alert('All Fields are required!');
     }else{
