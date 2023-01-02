@@ -838,12 +838,12 @@ function onGenerateDropListSchool(data) {
             method:"POST",  
             data: '',  
             success: function(response) {
-                console.log('res:',response);
                 var jsonData = JSON.parse(response);
                 console.log('json:',jsonData);
                 if (jsonData.success){
-                    document.getElementById("pending_label").innerText =jsonData.data[0].counter;
-                    document.getElementById("active_label").innerText =jsonData.data[1].counter;
+                    console.log("check:",jsonData);
+                    document.getElementById("pending_label").innerText =jsonData.pending[0].counter;
+                    document.getElementById("active_label").innerText =jsonData.active[0].counter;
                 }else{
                     alert(jsonData.error_msg);
                 }
