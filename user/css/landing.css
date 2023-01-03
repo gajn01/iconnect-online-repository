@@ -10,6 +10,12 @@
 body{
     background-color: #ffffff !important;
 }
+footer{
+    position: absolute;
+    bottom: 0;
+    background: #015c9f;
+    width: 100%;
+}
 .vertical-center {
     min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
     min-height: 100vh; /* These two lines are counted as one :-)       */

@@ -11,7 +11,7 @@ include("connection.php");
     /* FIles input */
     $targetDir = "../uploads/";
     $fileName = basename($_FILES["module_file"]["name"]);
-    $targetFilePath = $_SERVER["DOCUMENT_ROOT"] . $fileName;
+    $targetFilePath = $targetDir. $fileName;
     $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
  
     $form_data = array();
